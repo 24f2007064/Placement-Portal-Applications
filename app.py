@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, session, url_for
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
-from form import RegestrationForm
+
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "supersecretkey"
@@ -10,6 +10,14 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///placement.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
+
+
+
+
+
+
+
+
 
 # =========================
 # MODELS
@@ -165,6 +173,67 @@ class Placement(db.Model):
 
 
 
+
+
+
+
+
+@app.route("/regester", methods=["GET", "POST"])
+def regester():
+    if request.method == "POST":
+        name = request.form["name"]
+        email = request.form["email"]
+        password = request.form["password"]
+        role = request.form["role"]
+
+        existing_user = User.query.filter_by(email=email).first()
+        if existing_user:
+            return "Email already registered"
+
+        user = User(
+            name=name,
+            email=email,
+            password=generate_password_hash(password),
+            role=role,
+            is_approved=False if role == "company" else True
+        )
+
+        db.session.add(user)
+        db.session.commit()
+
+        return "Registered Successfully"
+
+    return render_template("regester.html")
+
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        email = request.form["email"]
+        password = request.form["password"]
+
+        user = User.query.filter_by(email=email).first()
+
+        if not user:
+            return "No user found"
+
+        if user.password != password:
+            return "Wrong password"
+
+        if user.role == "company" and not user.is_approved:
+            return "You are not approved"
+
+        if user.role == "admin":
+            return redirect(url_for("admin_dashboard"))
+
+        elif user.role == "company":
+            return redirect(url_for("company_dashboard"))
+
+        elif user.role == "student":
+            return redirect(url_for("student_dashboard"))
+
+    return render_template("login.html")
 # =========================
 # APP START
 # =========================

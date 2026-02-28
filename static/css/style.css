@@ -1,0 +1,103 @@
+body {
+    background-color: #FCF7F8;
+    color: #2E2E2E;
+    font-family: Arial, sans-serif;
+}
+
+h1, h2, h3 {
+    color: #A31621;
+}
+
+.card {
+    background: #FFFFFF;
+    border: 1px solid #E8E0E2;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.btn-primary {
+    background-color: #A31621;
+    border: none;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #8E1C23;
+}
+
+/* Layout */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Card */
+.login-card {
+    background: #FFFFFF;
+    padding: 40px;
+    width: 350px;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 1px solid #E8E0E2;
+}
+
+/* Title */
+.login-title {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #A31621;
+}
+
+/* Input */
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #E8E0E2;
+    border-radius: 8px;
+    outline: none;
+}
+
+.input-group input:focus {
+    border-color: #c02a2f(355, 76%, 36%);
+}
+
+/* Button */
+.btn-primary {
+    width: 100%;
+    padding: 10px;
+    background-color: #c92835;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #c2343e;
+}
+
+/* Error */
+.error-message {
+    color: red;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* Register link */
+.register-link {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+}
