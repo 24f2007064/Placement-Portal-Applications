@@ -58,15 +58,16 @@
 
                 
                 <div class="input-group">
-                    <label>Role</label>
-                    <div class="select-wrapper">
-                        <select name="role" required>
-                            <option value="">Select Role</option>
-                            <option value="student">🎓 Student</option>
-                            <option value="company">🏢 Company</option>
-                        </select>
-                    </div>
-                </div>
+    <label>Role</label>
+
+    <div class="role-toggle">
+        <input type="radio" id="student" name="role" value="student" required hidden>
+        <label for="student" class="role-btn">🎓 Student</label>
+
+        <input type="radio" id="company" name="role" value="company" hidden>
+        <label for="company" class="role-btn">🏢 Company</label>
+    </div>
+</div>
 
                 <button type="submit" class="btn-primary">Register</button>
 
