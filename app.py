@@ -85,6 +85,7 @@ class Job(db.Model):
     title = db.Column(db.String(150))
     skills = db.Column(db.String(200))
     salary = db.Column(db.String(50))
+    description = db.Column(db.Text)
 
     is_approved = db.Column(db.Boolean, default=False)
     is_active = db.Column(db.Boolean, default=True)
@@ -177,7 +178,6 @@ class Placement(db.Model):
 
 
 
-
 @app.route("/regester", methods=["GET", "POST"])
 def regester():
     if request.method == "POST":
@@ -201,9 +201,28 @@ def regester():
         db.session.add(user)
         db.session.commit()
 
+        # 🔥 CREATE PROFILE BASED ON ROLE
+        if role == "company":
+            company_profile = CompanyProfile(
+                user_id=user.id,
+                company_name=name
+            )
+            db.session.add(company_profile)
+
+        elif role == "student":
+            student_profile = StudentProfile(
+                user_id=user.id
+            )
+            db.session.add(student_profile)
+
+        db.session.commit()
         return "Registered Successfully"
 
     return render_template("regester.html")
+
+
+
+
 
 
 """
@@ -277,10 +296,6 @@ def login():
 
 
 
-@app.route("/company_dashboard")
-def company_dashboard():
-    return "This is Company Dashboard"
-
 
 @app.route("/student_dashboard")
 def student_dashboard():
@@ -301,7 +316,7 @@ def student_dashboard():
 
 #MY WORKS
 
-
+# ADMIN DASHBOARD
 @app.route("/admin_dashboard")
 def admin_dashboard():
     if "role" not in session or session["role"] != "admin":
@@ -309,7 +324,6 @@ def admin_dashboard():
 
     total_students = User.query.filter_by(role="student").count()
 
-    # Only approved companies
     total_companies = User.query.filter_by(
         role="company",
         is_approved=True
@@ -318,8 +332,14 @@ def admin_dashboard():
     total_jobs = Job.query.count()
     total_applications = Application.query.count()
 
+    # Pending company approvals
     pending_companies = User.query.filter_by(
         role="company",
+        is_approved=False
+    ).all()
+
+    # 🔥 Pending job approvals (NEW)
+    pending_jobs = Job.query.filter_by(
         is_approved=False
     ).all()
 
@@ -334,6 +354,7 @@ def admin_dashboard():
         total_jobs=total_jobs,
         total_applications=total_applications,
         pending_companies=pending_companies,
+        pending_jobs=pending_jobs,   # 🔥 pass this
         recent_applications=recent_applications
     )
 
@@ -341,6 +362,107 @@ def admin_dashboard():
 
 
 
+#COMAPNY DASHBOARD
+@app.route("/company_dashboard")
+def company_dashboard():
+    if "role" not in session or session["role"] != "company":
+        return redirect(url_for("login"))
+
+    user = User.query.get(session["user_id"])
+
+    if not user.company_profile:
+        return "Company profile not created"
+
+    company = user.company_profile
+
+    active_jobs = Job.query.filter_by(
+        company_id=company.id,
+        is_active=True
+    ).all()
+
+    closed_jobs = Job.query.filter_by(
+        company_id=company.id,
+        is_active=False
+    ).all()
+
+    total_applications = Application.query.join(Job).filter(
+        Job.company_id == company.id,
+        Job.is_approved == True
+    ).count()
+
+    return render_template(
+        "company_dashboard.html",
+        company=company,
+        active_jobs=active_jobs,
+        closed_jobs=closed_jobs,
+        total_applications=total_applications
+    )
+
+
+
+
+
+@app.route("/create_job", methods=["GET", "POST"])
+def create_job():
+    if "role" not in session or session["role"] != "company":
+        return redirect(url_for("login"))
+
+    user = User.query.get(session["user_id"])
+    company = user.company_profile
+
+    if request.method == "POST":
+        title = request.form["title"]
+        skills = request.form["skills"]
+        salary = request.form["salary"]
+        description = request.form["description"]
+
+        job = Job(
+            company_id=company.id,
+            title=title,
+            skills=skills,
+            salary=salary,
+            description=description,
+            is_active=True,
+            is_approved=False
+        )
+
+        db.session.add(job)
+        db.session.commit()
+
+        return redirect(url_for("company_dashboard"))
+
+    return render_template("create_job.html")
+
+
+
+
+
+
+#JOB CLOSE
+@app.route("/close_job/<int:job_id>")
+def close_job(job_id):
+    if "role" not in session or session["role"] != "company":
+        return redirect(url_for("login"))
+
+    job = Job.query.get_or_404(job_id)
+
+    if job.is_approved:
+        job.is_active = False
+        db.session.commit()
+
+    return redirect(url_for("company_dashboard"))
+
+
+
+
+
+
+
+
+
+
+
+# APPROVECOMPANY by ADMIN
 
 @app.route("/approve_company/<int:user_id>")
 def approve_company(user_id):
@@ -353,7 +475,7 @@ def approve_company(user_id):
 
     return redirect(url_for("admin_dashboard"))
 
-
+# REJECTED COMPANY BY ADMIN
 @app.route("/reject_company/<int:user_id>")
 def reject_company(user_id):
     if "role" not in session or session["role"] != "admin":
@@ -364,6 +486,55 @@ def reject_company(user_id):
     db.session.commit()
 
     return redirect(url_for("admin_dashboard"))
+
+
+
+
+
+
+#APROVED JOBES by ADMIN
+@app.route("/approve_job/<int:job_id>")
+def approve_job(job_id):
+    if "role" not in session or session["role"] != "admin":
+        return redirect(url_for("login"))
+
+    job = Job.query.get_or_404(job_id)
+    job.is_approved = True
+    db.session.commit()
+
+    return redirect(url_for("admin_dashboard"))
+
+
+# REJECTED JOB by ADMIN
+@app.route("/reject_job/<int:job_id>")
+def reject_job(job_id):
+    if "role" not in session or session["role"] != "admin":
+        return redirect(url_for("login"))
+
+    job = Job.query.get_or_404(job_id)
+
+
+    db.session.delete(job)
+
+
+    db.session.commit()
+
+    return redirect(url_for("admin_dashboard"))
+
+
+
+
+#Admin Job Detail Route
+@app.route("/admin/job/<int:job_id>")
+def admin_view_job(job_id):
+    if "role" not in session or session["role"] != "admin":
+        return redirect(url_for("login"))
+
+    job = Job.query.get_or_404(job_id)
+    return render_template("admin_job_detail.html", job=job)
+
+
+
 
 
 

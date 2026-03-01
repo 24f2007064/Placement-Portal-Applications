@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Job Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="top-bar">
+            <h1 class="title">Drive Review</h1>
+            <a href="/admin_dashboard" class="btn back-btn">← Back</a>
+        </div>
+
+        <div class="section">
+            <h2>{{ job.title }}</h2>
+
+            <p><strong>Company:</strong> {{ job.company.company_name }}</p>
+            <p><strong>Salary:</strong> {{ job.salary }}</p>
+            <p><strong>Skills:</strong> {{ job.skills }}</p>
+
+            <hr style="margin: 25px 0; border: 1px solid rgba(255,255,255,0.05);">
+
+            <h3>Description</h3>
+            <p style="line-height: 1.7; opacity: 0.9;">
+                {{ job.description }}
+            </p>
+
+            <div class="action-buttons" style="margin-top: 30px;">
+                <a href="/approve_job/{{ job.id }}" class="btn approve">Approve</a>
+                <a href="/reject_job/{{ job.id }}" class="btn reject">Reject</a>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

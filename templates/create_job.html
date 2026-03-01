@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Drive</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/job.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="job-card">
+    <h2>Create New Drive</h2>
+
+    <form method="POST">
+
+        <div class="input-group">
+            <label>Job Title</label>
+            <input type="text" name="title" required>
+        </div>
+
+        <div class="input-group">
+            <label>Required Skills</label>
+            <input type="text" name="skills" required>
+        </div>
+
+        <div class="input-group">
+            <label>Salary</label>
+            <input type="text" name="salary" required>
+        </div>
+
+        <div class="input-group">
+            <label>Job Description</label>
+            <textarea name="description" rows="5" required></textarea>
+        </div>
+
+        <button type="submit" class="btn-create">Create Drive</button>
+
+    </form>
+</div>
+
+</body>
+</html>
