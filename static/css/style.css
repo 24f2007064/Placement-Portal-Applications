@@ -1,31 +1,21 @@
+/* =========================
+   GLOBAL
+========================= */
 body {
-    background-color: #FCF7F8;
-    color: #2E2E2E;
-    font-family: Arial, sans-serif;
+    background-color: #0A1128;
+    color: #EAEAEA;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
 }
 
+/* Titles */
 h1, h2, h3 {
-    color: #A31621;
+    color: #ACFF11;
 }
 
-.card {
-    background: #FFFFFF;
-    border: 1px solid #E8E0E2;
-    border-radius: 12px;
-    padding: 20px;
-}
-
-.btn-primary {
-    background-color: #A31621;
-    border: none;
-    color: white;
-}
-
-.btn-primary:hover {
-    background-color: #8E1C23;
-}
-
-/* Layout */
+/* =========================
+   LAYOUT
+========================= */
 .login-container {
     display: flex;
     justify-content: center;
@@ -33,24 +23,30 @@ h1, h2, h3 {
     height: 100vh;
 }
 
-/* Card */
+/* =========================
+   CARD
+========================= */
 .login-card {
-    background: #FFFFFF;
+    background: #121A3A;
     padding: 40px;
-    width: 350px;
-    border-radius: 14px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    border: 1px solid #E8E0E2;
+    width: 360px;
+    border-radius: 16px;
+    border: 1px solid #1F2A55;
+    box-shadow: 0 0 30px rgba(172, 255, 17, 0.15);
 }
 
 /* Title */
 .login-title {
     text-align: center;
     margin-bottom: 25px;
-    color: #A31621;
+    color: #ACFF11;
+    font-weight: 600;
+    letter-spacing: 0.5px;
 }
 
-/* Input */
+/* =========================
+   INPUT GROUP
+========================= */
 .input-group {
     margin-bottom: 20px;
 }
@@ -59,45 +55,104 @@ h1, h2, h3 {
     display: block;
     margin-bottom: 6px;
     font-size: 14px;
+    color: #B8C6FF;
+    font-weight: 500;
 }
 
-.input-group input {
+/* Inputs */
+.input-group input,
+.select-wrapper select {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #E8E0E2;
-    border-radius: 8px;
+    padding: 12px;
+    border: 1px solid #1F2A55;
+    border-radius: 10px;
+    background-color: #0F1B40;
+    color: white;
     outline: none;
+    font-size: 14px;
+    transition: 0.25s ease;
 }
 
-.input-group input:focus {
-    border-color: #c02a2f(355, 76%, 36%);
+/* Focus effect */
+.input-group input:focus,
+.select-wrapper select:focus {
+    border-color: #ACFF11;
+    box-shadow: 0 0 10px rgba(172, 255, 17, 0.5);
 }
 
-/* Button */
+/* =========================
+   BUTTON
+========================= */
 .btn-primary {
     width: 100%;
-    padding: 10px;
-    background-color: #c92835;
-    color: white;
+    padding: 12px;
+    background-color: #ACFF11;
+    color: #0A1128;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s ease;
 }
 
 .btn-primary:hover {
-    background-color: #c2343e;
+    background-color: #8DCC00;
+    box-shadow: 0 0 15px rgba(172, 255, 17, 0.6);
 }
 
-/* Error */
+/* =========================
+   ERROR
+========================= */
 .error-message {
-    color: red;
+    color: #FF4C4C;
     text-align: center;
     margin-bottom: 15px;
+    font-size: 14px;
 }
 
-/* Register link */
+/* =========================
+   REGISTER LINK
+========================= */
 .register-link {
     text-align: center;
     margin-top: 15px;
     font-size: 14px;
+}
+
+.register-link a {
+    color: #ACFF11;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
+
+.role-toggle {
+    display: flex;
+    gap: 12px;
+}
+
+.role-btn {
+    flex: 1;
+    text-align: center;
+    padding: 12px;
+    border-radius: 12px;
+    background: #0F1B40;
+    border: 1px solid #1F2A55;
+    cursor: pointer;
+    transition: 0.25s ease;
+    font-weight: 500;
+}
+
+.role-btn:hover {
+    border-color: #ACFF11;
+}
+
+input[type="radio"]:checked + .role-btn {
+    background: #ACFF11;
+    color: #0A1128;
+    font-weight: 600;
+    box-shadow: 0 0 12px rgba(172, 255, 17, 0.5);
 }

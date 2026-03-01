@@ -206,7 +206,7 @@ def regester():
     return render_template("regester.html")
 
 
-
+"""
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -233,7 +233,64 @@ def login():
         elif user.role == "student":
             return redirect(url_for("student_dashboard"))
 
+    return render_template("login.html")"""
+
+
+
+# =========================
+# LOGIN
+# =========================
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        email = request.form["email"]
+        password = request.form["password"]
+
+        user = User.query.filter_by(email=email).first()
+
+        if not user:
+            return render_template("login.html", error="Invalid email or password")
+
+        if not check_password_hash(user.password, password):
+            return render_template("login.html", error="Invalid email or password")
+
+        if user.role == "company" and not user.is_approved:
+            return render_template("login.html", error="Company not approved yet")
+
+        # Create session
+        session["user_id"] = user.id
+        session["role"] = user.role
+
+        # Redirect based on role
+        if user.role == "admin":
+            return redirect(url_for("admin_dashboard"))
+        elif user.role == "company":
+            return redirect(url_for("company_dashboard"))
+        elif user.role == "student":
+            return redirect(url_for("student_dashboard"))
+
     return render_template("login.html")
+
+
+
+
+
+
+@app.route("/admin_dashboard")
+def admin_dashboard():
+    return "This is Admin Dashboard"
+
+
+@app.route("/company_dashboard")
+def company_dashboard():
+    return "This is Company Dashboard"
+
+
+@app.route("/student_dashboard")
+def student_dashboard():
+    return "This is Student Dashboard"
+
 # =========================
 # APP START
 # =========================
