@@ -277,11 +277,6 @@ def login():
 
 
 
-@app.route("/admin_dashboard")
-def admin_dashboard():
-    return "This is Admin Dashboard"
-
-
 @app.route("/company_dashboard")
 def company_dashboard():
     return "This is Company Dashboard"
@@ -290,6 +285,93 @@ def company_dashboard():
 @app.route("/student_dashboard")
 def student_dashboard():
     return "This is Student Dashboard"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#MY WORKS
+
+
+@app.route("/admin_dashboard")
+def admin_dashboard():
+    if "role" not in session or session["role"] != "admin":
+        return redirect(url_for("login"))
+
+    total_students = User.query.filter_by(role="student").count()
+
+    # Only approved companies
+    total_companies = User.query.filter_by(
+        role="company",
+        is_approved=True
+    ).count()
+
+    total_jobs = Job.query.count()
+    total_applications = Application.query.count()
+
+    pending_companies = User.query.filter_by(
+        role="company",
+        is_approved=False
+    ).all()
+
+    recent_applications = Application.query.order_by(
+        Application.applied_at.desc()
+    ).limit(5).all()
+
+    return render_template(
+        "admin_dashboard.html",
+        total_students=total_students,
+        total_companies=total_companies,
+        total_jobs=total_jobs,
+        total_applications=total_applications,
+        pending_companies=pending_companies,
+        recent_applications=recent_applications
+    )
+
+
+
+
+
+
+@app.route("/approve_company/<int:user_id>")
+def approve_company(user_id):
+    if "role" not in session or session["role"] != "admin":
+        return redirect(url_for("login"))
+
+    company = User.query.get_or_404(user_id)
+    company.is_approved = True
+    db.session.commit()
+
+    return redirect(url_for("admin_dashboard"))
+
+
+@app.route("/reject_company/<int:user_id>")
+def reject_company(user_id):
+    if "role" not in session or session["role"] != "admin":
+        return redirect(url_for("login"))
+
+    company = User.query.get_or_404(user_id)
+    db.session.delete(company)
+    db.session.commit()
+
+    return redirect(url_for("admin_dashboard"))
+
+
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("login"))
+
 
 # =========================
 # APP START
