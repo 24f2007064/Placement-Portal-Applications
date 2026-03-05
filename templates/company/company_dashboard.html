@@ -5,6 +5,7 @@
     <title>Company Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+    
 </head>
 
 <body>
@@ -116,11 +117,7 @@
                     <td>{{ job.salary }}</td>
 
                     <td>
-                        {% if job.is_approved %}
-                        <span class="badge badge-approved">Approved</span>
-                        {% else %}
-                        <span class="badge badge-pending">Pending</span>
-                        {% endif %}
+                        <span class="badge badge-rejected">Closed</span>
                     </td>
 
                     <td>{{ job.applications|length }}</td>

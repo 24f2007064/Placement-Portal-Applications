@@ -596,6 +596,44 @@ def view_applicants(job_id):
 
 
 
+@app.route("/update_application/<int:app_id>/<string:action>")
+def update_application(app_id, action):
+
+    if "role" not in session or session["role"] != "company":
+        return redirect(url_for("login"))
+
+    application = Application.query.get_or_404(app_id)
+
+    if action == "shortlist":
+        application.status = "Shortlisted"
+
+    elif action == "select":
+        application.status = "Placed"
+
+        # optional: create placement record
+        placement = Placement(
+            student_id=application.student_id,
+            company_id=application.job.company_id,
+            job_id=application.job_id,
+            salary_offered=application.job.salary
+        )
+        db.session.add(placement)
+
+    elif action == "reject":
+        application.status = "Rejected"
+
+    db.session.commit()
+
+    return redirect(request.referrer)
+
+
+
+
+
+
+
+
+
 # APPROVECOMPANY by ADMIN
 
 @app.route("/approve_company/<int:user_id>")

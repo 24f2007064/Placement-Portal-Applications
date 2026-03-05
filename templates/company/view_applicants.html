@@ -52,7 +52,33 @@
                     </a>
                 </td>
 
-                <td>{{ app.status }}</td>
+                <td>
+
+                    <span class="badge
+                        {% if app.status == 'Applied' %}badge-applied
+                        {% elif app.status == 'Shortlisted' %}badge-shortlisted
+                        {% elif app.status == 'Rejected' %}badge-rejected
+                        {% elif app.status == 'Placed' %}badge-placed
+                        {% endif %}
+                        ">
+                        {{ app.status }}
+                    </span>
+
+                    <br><br>
+
+                    <a href="/update_application/{{ app.id }}/shortlist" class="btn shortlist-btn">
+                        ⭐ Shortlist
+                    </a>
+
+                    <a href="/update_application/{{ app.id }}/select" class="btn select-btn">
+                        ✔ Select
+                    </a>
+
+                    <a href="/update_application/{{ app.id }}/reject" class="btn reject">
+                        ✖ Reject
+                    </a>
+
+                </td>
 
             </tr>
 
