@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{% block title %}Admin Panel{% endblock %}</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="top-bar">
+        <h1 class="title">{% block page_title %}Admin Panel{% endblock %}</h1>
+
+        <div>
+            {% block top_button %}{% endblock %}
+        </div>
+    </div>
+
+    {% block content %}
+    {% endblock %}
+
+</div>
+
+</body>
+</html>

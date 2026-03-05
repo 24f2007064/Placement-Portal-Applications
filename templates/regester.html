@@ -1,92 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-    <title>Regester</title>
-</head>
-
-<!DOCTYPE html>
 <html>
 
 <head>
     <title>Register</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
 </head>
 
 <body>
 
-    <div class="login-container">
-        <div class="login-card">
+<div class="login-container">
+<div class="login-card">
 
-            <h2 class="login-title">Create Account</h2>
+<h2 class="login-title">Create Account</h2>
 
+{% if error %}
+<p class="error-message">{{ error }}</p>
+{% endif %}
 
+<form action="/regester" method="POST">
 
-
-            {% if error %}
-            <p class="error-message">{{ error }}</p>
-            {% endif %}
-
-
-
-
-
-
-            <form action="/regester" method="POST">
-
-                <div class="input-group">
-                    <label>Name</label>
-                    <input type="text" name="name" required>
-                </div>
-
-                <div class="input-group">
-                    <label>Email</label>
-                    <input type="email" name="email" required>
-                </div>
-
-                <div class="input-group">
-                    <label>Password</label>
-                    <input type="password" name="password" required minlength="6">
-                </div>
-
-
-
-
-                
-                <div class="input-group">
-    <label>Role</label>
-
-    <div class="role-toggle">
-        <input type="radio" id="student" name="role" value="student" required hidden>
-        <label for="student" class="role-btn">🎓 Student</label>
-
-        <input type="radio" id="company" name="role" value="company" hidden>
-        <label for="company" class="role-btn">🏢 Company</label>
-    </div>
+<div class="input-group">
+<label>Name</label>
+<input type="text" name="name" required>
 </div>
 
-                <button type="submit" class="btn-primary">Register</button>
+<div class="input-group">
+<label>Email</label>
+<input type="email" name="email" required>
+</div>
 
-            </form>
+<div class="input-group">
+<label>Password</label>
+<input type="password" name="password" required minlength="6">
+</div>
 
-            <p class="register-link">
-                Already have an account?
-                <a href="{{ url_for('login') }}">Login</a>
-            </p>
+<!-- ROLE SELECTOR -->
 
-        </div>
-    </div>
+<div class="input-group">
+
+<label>Account Type</label>
+
+<div class="role-container">
+
+<input type="radio" id="student" name="role" value="student" required>
+<label for="student" class="role-card">
+
+<div class="role-icon">🎓</div>
+<div class="role-title">Student</div>
+<div class="role-desc">Apply to jobs</div>
+
+</label>
+
+<input type="radio" id="company" name="role" value="company">
+<label for="company" class="role-card">
+
+<div class="role-icon">🏢</div>
+<div class="role-title">Company</div>
+<div class="role-desc">Post jobs</div>
+
+</label>
+
+</div>
+</div>
+
+<button type="submit" class="btn-primary">Register</button>
+
+</form>
+
+<p class="register-link">
+Already have an account?
+<a href="{{ url_for('login') }}">Login</a>
+</p>
+
+</div>
+</div>
 
 </body>
-
-</html>
-
-
-
-</body>
-
 </html>

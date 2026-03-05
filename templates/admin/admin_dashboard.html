@@ -1,173 +1,231 @@
-<!DOCTYPE html>
-<html>
+{% extends "admin/base_admin.html" %}
 
-<head>
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
-</head>
+{% block title %}Admin Dashboard{% endblock %}
 
-<body>
+{% block page_title %}
+Admin Dashboard
+{% endblock %}
 
-    <div class="container">
+{% block top_button %}
+<a href="/logout" class="btn logout-btn">Logout</a>
+{% endblock %}
 
-        <!-- ===== TOP BAR ===== -->
-        <div class="top-bar">
-            <h1 class="title">Admin Dashboard</h1>
-            <a href="/logout" class="btn logout-btn">Logout</a>
-        </div>
+{% block content %}
 
-        <!-- ===== Stats Section ===== -->
-        <div class="stats">
-            <div class="card">
-                <h3>Total Students</h3>
-                <p>{{ total_students }}</p>
-            </div>
+<div class="stats">
 
-            <a href="/admin/companies" class="card-link">
-                <div class="card">
-                    <h3>Total Companies</h3>
-                    <p>{{ total_companies }}</p>
-                </div>
-            </a>
-
-            <a href="/admin/jobs" class="card-link">
-                <div class="card">
-                    <h3>Total Jobs</h3>
-
-                    <p>{{ total_jobs }}</p>
-
-                    <small style="opacity:0.6; display:block; margin-top:6px;">
-                        All time: {{ total_jobs_history }}
-                    </small>
-
-                </div>
-            </a>
-
-            <div class="card">
-                <h3>Total Applications</h3>
-                <p>{{ total_applications }}</p>
-            </div>
-        </div>
-
-        <!-- ===== Pending Companies ===== -->
-        <div class="section">
-            <h2>Pending Companies</h2>
-
-            {% if pending_companies %}
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th class="action-cell">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for company in pending_companies %}
-                    <tr>
-                        <td>{{ company.name }}</td>
-                        <td>{{ company.email }}</td>
-                        <td class="action-cell">
-                            <div class="action-buttons">
-                                <a href="/approve_company/{{ company.id }}" class="btn approve">Approve</a>
-                                <a href="/reject_company/{{ company.id }}" class="btn reject">Reject</a>
-                            </div>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            {% else %}
-            <p>No pending companies.</p>
-            {% endif %}
-        </div>
-
-        <!-- ===== Pending Drives ===== -->
-        <div class="section">
-            <h2>Pending Drives</h2>
-
-            {% if pending_jobs %}
-            <table>
-                <thead>
-                    <tr>
-                        <th>Company</th>
-                        <th>Title</th>
-                        <th>Salary</th>
-                        <th class="action-cell">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for job in pending_jobs %}
-                    <tr>
-                        <td>{{ job.company.company_name }}</td>
-                        <td>
-                            <a href="/admin/job/{{ job.id }}" class="job-link">
-                                {{ job.title }}
-                            </a>
-                        </td>
-                        <td>{{ job.salary }}</td>
-                        <td class="action-cell">
-                            <div class="action-buttons">
-                                <a href="/approve_job/{{ job.id }}" class="btn approve">Approve</a>
-                                <a href="/reject_job/{{ job.id }}" class="btn reject">Reject</a>
-                            </div>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            {% else %}
-            <p>No pending drives.</p>
-            {% endif %}
-        </div>
-
-        <!-- ===== Recent Applications ===== -->
-        <div class="section">
-            <h2>Recent Applications</h2>
-
-            {% if recent_applications %}
-            <table>
-                <thead>
-                    <tr>
-                        <th>Student</th>
-                        <th>Job</th>
-                        <th>Status</th>
-                        <th>Applied On</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for app in recent_applications %}
-                    <tr>
-                        <td>{{ app.student.user.name }}</td>
-                        <td>
-                            <a href="/admin/job/{{ app.job.id }}" class="job-link">
-                                {{ app.job.title }}
-                            </a>
-                        </td>
-                        <td>
-                            <span class="badge
-                            {% if app.status == 'Applied' %}badge-applied
-                            {% elif app.status == 'Shortlisted' %}badge-shortlisted
-                            {% elif app.status == 'Rejected' %}badge-rejected
-                            {% elif app.status == 'Placed' %}badge-placed
-                            {% endif %}
-                        ">
-                                {{ app.status }}
-                            </span>
-                        </td>
-                        <td>{{ app.applied_at.strftime('%Y-%m-%d %H:%M') }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            {% else %}
-            <p>No applications yet.</p>
-            {% endif %}
-        </div>
-
+    <div class="card">
+        <h3>Total Students</h3>
+        <p>{{ total_students }}</p>
     </div>
 
-</body>
+    <a href="/admin/companies" class="card-link">
+        <div class="card">
+            <h3>Total Companies</h3>
+            <p>{{ total_companies }}</p>
+        </div>
+    </a>
 
-</html>
+    <a href="/admin/jobs" class="card-link">
+        <div class="card">
+            <h3>Total Jobs</h3>
+            <p>{{ total_jobs }}</p>
+
+            <small style="opacity:0.6; display:block; margin-top:6px;">
+                All time: {{ total_jobs_history }}
+            </small>
+        </div>
+    </a>
+
+    <div class="card">
+        <h3>Total Applications</h3>
+        <p>{{ total_applications }}</p>
+    </div>
+
+</div>
+
+
+<div class="section">
+
+<h2>Pending Companies</h2>
+
+{% if pending_companies %}
+
+<table>
+
+<thead>
+<tr>
+<th>Name</th>
+<th>Email</th>
+<th class="action-cell">Actions</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for company in pending_companies %}
+
+<tr>
+
+<td>{{ company.name }}</td>
+<td>{{ company.email }}</td>
+
+<td class="action-cell">
+
+<div class="action-buttons">
+
+<a href="/approve_company/{{ company.id }}" class="btn approve">
+Approve
+</a>
+
+<a href="/reject_company/{{ company.id }}" class="btn reject">
+Reject
+</a>
+
+</div>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+{% else %}
+<p>No pending companies.</p>
+{% endif %}
+
+</div>
+
+
+<div class="section">
+
+<h2>Pending Drives</h2>
+
+{% if pending_jobs %}
+
+<table>
+
+<thead>
+<tr>
+<th>Company</th>
+<th>Title</th>
+<th>Salary</th>
+<th class="action-cell">Action</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for job in pending_jobs %}
+
+<tr>
+
+<td>{{ job.company.company_name }}</td>
+
+<td>
+<a href="/admin/job/{{ job.id }}" class="job-link">
+{{ job.title }}
+</a>
+</td>
+
+<td>{{ job.salary }}</td>
+
+<td class="action-cell">
+
+<div class="action-buttons">
+
+<a href="/approve_job/{{ job.id }}" class="btn approve">
+Approve
+</a>
+
+<a href="/reject_job/{{ job.id }}" class="btn reject">
+Reject
+</a>
+
+</div>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+{% else %}
+<p>No pending drives.</p>
+{% endif %}
+
+</div>
+
+
+<div class="section">
+
+<h2>Recent Applications</h2>
+
+{% if recent_applications %}
+
+<table>
+
+<thead>
+<tr>
+<th>Student</th>
+<th>Job</th>
+<th>Status</th>
+<th>Applied On</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for app in recent_applications %}
+
+<tr>
+
+<td>{{ app.student.user.name }}</td>
+
+<td>
+<a href="/admin/job/{{ app.job.id }}" class="job-link">
+{{ app.job.title }}
+</a>
+</td>
+
+<td>
+
+<span class="badge
+{% if app.status == 'Applied' %}badge-applied
+{% elif app.status == 'Shortlisted' %}badge-shortlisted
+{% elif app.status == 'Rejected' %}badge-rejected
+{% elif app.status == 'Placed' %}badge-placed
+{% endif %}
+">
+
+{{ app.status }}
+
+</span>
+
+</td>
+
+<td>{{ app.applied_at.strftime('%Y-%m-%d %H:%M') }}</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+{% else %}
+<p>No applications yet.</p>
+{% endif %}
+
+</div>
+
+{% endblock %}

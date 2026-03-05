@@ -1,54 +1,74 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>All Companies</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
-</head>
-<body>
+{% extends "admin/base_admin.html" %}
 
-<div class="container">
+{% block title %}All Companies{% endblock %}
 
-    <div class="top-bar">
-        <h1 class="title">All Companies</h1>
-        <a href="/admin_dashboard" class="btn back-btn">← Back</a>
-    </div>
+{% block page_title %}
+All Companies
+{% endblock %}
 
-    <div class="section">
+{% block top_button %}
+<a href="/admin_dashboard" class="btn back-btn">← Back</a>
+{% endblock %}
 
-        {% if companies %}
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Status</th>
-                    <th>Created At</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for company in companies %}
-                <tr>
-                    <td>{{ company.name }}</td>
-                    <td>{{ company.email }}</td>
-                    <td>
-                        {% if company.is_approved %}
-                            <span class="badge badge-shortlisted">Approved</span>
-                        {% else %}
-                            <span class="badge badge-rejected">Pending</span>
-                        {% endif %}
-                    </td>
-                    <td>{{ company.created_at.strftime('%Y-%m-%d') }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        {% else %}
-        <p>No companies registered.</p>
-        {% endif %}
+{% block content %}
 
-    </div>
+<div class="section">
+
+{% if companies %}
+
+<table>
+
+<thead>
+<tr>
+<th>Name</th>
+<th>Email</th>
+<th>Status</th>
+<th>Created At</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for company in companies %}
+
+<tr>
+
+<td>{{ company.name }}</td>
+
+<td>{{ company.email }}</td>
+
+<td>
+
+{% if company.is_approved %}
+
+<span class="badge badge-shortlisted">
+Approved
+</span>
+
+{% else %}
+
+<span class="badge badge-rejected">
+Pending
+</span>
+
+{% endif %}
+
+</td>
+
+<td>{{ company.created_at.strftime('%Y-%m-%d') }}</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+{% else %}
+<p>No companies registered.</p>
+{% endif %}
 
 </div>
 
-</body>
-</html>
+{% endblock %}

@@ -1,52 +1,53 @@
-<!DOCTYPE html>
-<html>
+{% extends "admin/base_admin.html" %}
 
-<head>
-    <title>Job Details</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
-</head>
+{% block title %}Drive Review{% endblock %}
 
-<body>
+{% block page_title %}
+Drive Review
+{% endblock %}
 
-    <div class="container">
+{% block top_button %}
+<a href="/admin_dashboard" class="btn back-btn">← Back</a>
+{% endblock %}
 
-        <div class="top-bar">
-            <h1 class="title">Drive Review</h1>
-            <a href="/admin_dashboard" class="btn back-btn">← Back</a>
-        </div>
+{% block content %}
 
-        <div class="section">
-            <h2>{{ job.title }}</h2>
+<div class="section">
 
-            <p><strong>Company:</strong> {{ job.company.company_name }}</p>
-            <p><strong>Salary:</strong> {{ job.salary }}</p>
-            <p><strong>Skills:</strong> {{ job.skills }}</p>
+<h2>{{ job.title }}</h2>
 
-            <hr style="margin: 25px 0; border: 1px solid rgba(255,255,255,0.05);">
+<p><strong>Company:</strong> {{ job.company.company_name }}</p>
 
-            <h3>Description</h3>
-            <p style="line-height: 1.7; opacity: 0.9;">
-                {{ job.description }}
-            </p>
+<p><strong>Salary:</strong> {{ job.salary }}</p>
 
-            {% if not job.is_approved %}
+<p><strong>Skills:</strong> {{ job.skills }}</p>
 
-            <a href="/approve_job/{{ job.id }}" class="btn approve">
-                Approve
-            </a>
+<hr style="margin:25px 0; border:1px solid rgba(255,255,255,0.05);">
 
-            <a href="/reject_job/{{ job.id }}" class="btn reject">
-                Reject
-            </a>
+<h3>Description</h3>
 
-            {% else %}
+<p style="line-height:1.7; opacity:0.9;">
+{{ job.description }}
+</p>
 
-            <span class="badge badge-approved">Already Approved</span>
+{% if not job.is_approved %}
 
-            {% endif %}
+<a href="/approve_job/{{ job.id }}" class="btn approve">
+Approve
+</a>
 
-        </div>
+<a href="/reject_job/{{ job.id }}" class="btn reject">
+Reject
+</a>
 
-</body>
+{% else %}
 
-</html>
+<span class="badge badge-approved">
+Already Approved
+</span>
+
+{% endif %}
+
+</div>
+
+{% endblock %}

@@ -1,71 +1,102 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>All Jobs</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
-</head>
-<body>
+{% extends "admin/base_admin.html" %}
 
-<div class="container">
+{% block title %}All Jobs{% endblock %}
 
-    <div class="top-bar">
-        <h1 class="title">All Jobs</h1>
-        <a href="/admin_dashboard" class="btn back-btn">← Back</a>
-    </div>
+{% block page_title %}
+All Jobs
+{% endblock %}
 
-    <div class="section">
+{% block top_button %}
+<a href="/admin_dashboard" class="btn back-btn">← Back</a>
+{% endblock %}
 
-        {% if jobs %}
-        <table>
-            <thead>
-                <tr>
-                    <th>Company</th>
-                    <th>Title</th>
-                    <th>Salary</th>
-                    <th>Status</th>
-                    <th>Active</th>
-                    <th>Applications</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for job in jobs %}
-                <tr>
-                    <td>{{ job.company.company_name }}</td>
-                    <td>
-                        <a href="/admin/job/{{ job.id }}" class="job-link">
-                            {{ job.title }}
-                        </a>
-                    </td>
-                    <td>{{ job.salary }}</td>
+{% block content %}
 
-                    <td>
-                        {% if job.is_approved %}
-                            <span class="badge badge-shortlisted">Approved</span>
-                        {% else %}
-                            <span class="badge badge-rejected">Pending</span>
-                        {% endif %}
-                    </td>
+<div class="section">
 
-                    <td>
-                        {% if job.is_active %}
-                            <span class="badge badge-applied">Active</span>
-                        {% else %}
-                            <span class="badge badge-rejected">Closed</span>
-                        {% endif %}
-                    </td>
+{% if jobs %}
 
-                    <td>{{ job.applications|length }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        {% else %}
-        <p>No jobs found.</p>
-        {% endif %}
+<table>
 
-    </div>
+<thead>
+<tr>
+<th>Company</th>
+<th>Title</th>
+<th>Salary</th>
+<th>Status</th>
+<th>Active</th>
+<th>Applications</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for job in jobs %}
+
+<tr>
+
+<td>{{ job.company.company_name }}</td>
+
+<td>
+
+<a href="/admin/job/{{ job.id }}" class="job-link">
+{{ job.title }}
+</a>
+
+</td>
+
+<td>{{ job.salary }}</td>
+
+<td>
+
+{% if job.is_approved %}
+
+<span class="badge badge-shortlisted">
+Approved
+</span>
+
+{% else %}
+
+<span class="badge badge-rejected">
+Pending
+</span>
+
+{% endif %}
+
+</td>
+
+<td>
+
+{% if job.is_active %}
+
+<span class="badge badge-applied">
+Active
+</span>
+
+{% else %}
+
+<span class="badge badge-rejected">
+Closed
+</span>
+
+{% endif %}
+
+</td>
+
+<td>{{ job.applications|length }}</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+{% else %}
+<p>No jobs found.</p>
+{% endif %}
 
 </div>
 
-</body>
-</html>
+{% endblock %}

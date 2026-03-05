@@ -106,3 +106,76 @@ text-decoration:none;
 .register-link a:hover{
 text-decoration:underline;
 }
+
+
+
+/* =========================
+ROLE SELECTOR
+========================= */
+
+.role-container{
+display:flex;
+gap:15px;
+margin-top:10px;
+}
+
+.role-container input{
+display:none;
+}
+
+.role-card{
+
+flex:1;
+
+background:#0F1B40;
+border:1px solid #1F2A55;
+border-radius:12px;
+
+padding:15px;
+text-align:center;
+
+cursor:pointer;
+
+transition:0.25s;
+}
+
+.role-icon{
+font-size:22px;
+margin-bottom:6px;
+}
+
+.role-title{
+font-weight:600;
+color:#EAEAEA;
+}
+
+.role-desc{
+font-size:12px;
+color:#9FB0FF;
+}
+
+/* hover animation */
+
+.role-card:hover{
+
+transform:translateY(-4px);
+border-color:#ACFF11;
+
+box-shadow:0 0 15px rgba(172,255,17,0.35);
+
+}
+
+/* selected role */
+
+.role-container input:checked + .role-card{
+
+border-color:#ACFF11;
+background:#121A3A;
+
+box-shadow:
+0 0 20px rgba(172,255,17,0.45),
+inset 0 0 10px rgba(172,255,17,0.15);
+
+transform:scale(1.03);
+
+}
