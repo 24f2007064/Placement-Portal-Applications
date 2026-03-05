@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Company Profile</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/job.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}">
+
+</head>
+
+<body>
+
+<div class="job-card">
+
+    <h2>Complete Company Profile</h2>
+
+    <form method="POST">
+
+        <div class="input-group">
+            <label>Company Name</label>
+            <input type="text" name="company_name"
+                   value="{{ company.company_name or '' }}" required>
+        </div>
+
+        <div class="input-group">
+            <label>Industry</label>
+            <input type="text" name="industry"
+                   value="{{ company.industry or '' }}">
+        </div>
+
+        <div class="input-group">
+            <label>Website</label>
+            <input type="text" name="website"
+                   value="{{ company.website or '' }}">
+        </div>
+
+        <div class="input-group">
+            <label>Location</label>
+            <input type="text" name="location"
+                   value="{{ company.location or '' }}">
+        </div>
+
+        <div class="input-group">
+            <label>HR Email</label>
+            <input type="email" name="hr_email"
+                   value="{{ company.hr_email or '' }}">
+        </div>
+
+        <div class="input-group">
+            <label>Contact Number</label>
+            <input type="text" name="contact_number"
+                   value="{{ company.contact_number or '' }}">
+        </div>
+
+        <div class="input-group">
+            <label>Company Description</label>
+            <textarea name="description" rows="5">{{ company.description or '' }}</textarea>
+        </div>
+
+        <button type="submit" class="btn-create">
+            Save Profile
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

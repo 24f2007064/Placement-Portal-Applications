@@ -70,6 +70,10 @@ class CompanyProfile(db.Model):
     company_name = db.Column(db.String(150))
     industry = db.Column(db.String(100))
     website = db.Column(db.String(150))
+    location = db.Column(db.String(150))
+    description = db.Column(db.Text)
+    hr_email = db.Column(db.String(120))
+    contact_number = db.Column(db.String(20))
 
     user = db.relationship("User", back_populates="company_profile")
     jobs = db.relationship("Job", back_populates="company")
@@ -216,7 +220,7 @@ def regester():
             db.session.add(student_profile)
 
         db.session.commit()
-        return "Registered Successfully"
+        return render_template("login.html", error="Registration successful. Please login.")
 
     return render_template("regester.html")
 
@@ -301,17 +305,6 @@ def login():
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 #STUDENT PROFILE
 
 
@@ -336,10 +329,21 @@ def student_dashboard():
     if not student.department or not student.cgpa or not student.resume:
         profile_complete = False
 
-    # approved & active jobs
-    jobs = Job.query.filter_by(
-        is_approved=True,
-        is_active=True
+
+    # student's applications
+    applications = Application.query.filter_by(
+        student_id=student.id
+    ).all()
+
+    # job ids already applied
+    applied_job_ids = [app.job_id for app in applications]
+
+
+    # approved & active jobs (NOT applied)
+    jobs = Job.query.filter(
+        Job.is_approved == True,
+        Job.is_active == True,
+        ~Job.id.in_(applied_job_ids)
     ).all()
 
     # student's applications
@@ -419,6 +423,35 @@ def student_profile():
 
 
 
+
+#COMAPNY PROFILE
+@app.route("/company_profile", methods=["GET", "POST"])
+def company_profile():
+
+    if "role" not in session or session["role"] != "company":
+        return redirect(url_for("login"))
+
+    user = User.query.get(session["user_id"])
+    company = user.company_profile
+
+    if request.method == "POST":
+
+        company.company_name = request.form["company_name"]
+        company.industry = request.form["industry"]
+        company.website = request.form["website"]
+        company.location = request.form["location"]
+        company.hr_email = request.form["hr_email"]
+        company.contact_number = request.form["contact_number"]
+        company.description = request.form["description"]
+
+        db.session.commit()
+
+        return redirect(url_for("company_dashboard"))
+
+    return render_template(
+        "company/company_profile.html",
+        company=company
+    )
 
 
 
@@ -553,6 +586,24 @@ def job_detail(job_id):
         "student/job_detail.html",
         job=job
     )
+
+
+
+
+
+@app.route("/company/<int:company_id>")
+def company_public_profile(company_id):
+
+    company = CompanyProfile.query.get_or_404(company_id)
+
+    return render_template(
+        "company/company_public_profile.html",
+        company=company
+    )
+
+
+
+
 
 
 

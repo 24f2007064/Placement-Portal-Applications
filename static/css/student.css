@@ -54,23 +54,58 @@ body{
 ========================= */
 
 .profile-alert{
-    background:linear-gradient(145deg,rgba(255,230,120,0.18),rgba(255,200,80,0.12));
-    border:1px solid rgba(255,210,120,0.25);
-    color:#FFE8A3;
-    padding:20px 28px;
-    border-radius:20px;
-    margin-bottom:45px;
-    font-size:14px;
+
+display:flex;
+flex-direction:column;      /* stack items vertically */
+
+align-items:flex-start;
+
+background:rgba(255,210,120,0.12);
+
+border:1px solid rgba(255,210,120,0.25);
+
+padding:35px 45px;          /* more breathing space */
+
+border-radius:18px;
+
+margin-bottom:55px;
+
+gap:15px;                   /* space between elements */
+
 }
 
-.profile-alert a{
-    color:#ACFF11;
-    font-weight:600;
-    text-decoration:none;
+/* title row */
+
+.alert-text{
+display:flex;
+align-items:center;
+gap:12px;
+
+font-size:20px;
+font-weight:600;
 }
 
-.profile-alert a:hover{
-    text-decoration:underline;
+/* warning icon */
+
+.alert-icon{
+font-size:22px;
+color:#FFD369;
+}
+
+/* description */
+
+.profile-warning p{
+
+margin-top:5px;
+margin-bottom:20px;
+
+opacity:0.9;
+font-size:15px;
+
+max-width:520px;            /* keeps text readable */
+
+line-height:1.6;
+
 }
 
 /* =========================

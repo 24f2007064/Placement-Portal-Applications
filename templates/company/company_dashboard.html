@@ -5,7 +5,7 @@
     <title>Company Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
-    
+
 </head>
 
 <body>
@@ -16,8 +16,19 @@
         <div class="top-bar">
             <h1 class="title">Welcome {{ company.company_name }}</h1>
             <div>
-                <a href="/create_job" class="btn approve">+ Create Drive</a>
-                <a href="/logout" class="btn logout-btn">Logout</a>
+
+                <a href="/company_profile" class="btn shortlist-btn">
+                    Company Profile
+                </a>
+
+                <a href="/create_job" class="btn approve">
+                    + Create Drive
+                </a>
+
+                <a href="/logout" class="btn logout-btn">
+                    Logout
+                </a>
+
             </div>
         </div>
 

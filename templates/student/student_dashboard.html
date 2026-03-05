@@ -31,12 +31,20 @@
 
 
         {% if not profile_complete %}
-        <div class="profile-alert">
-            Complete your profile (department, CGPA, resume) to apply for jobs.
-            <a href="/student_profile">Update profile</a>
+        <div class="section profile-warning">
+
+            <h2>⚠ Profile Incomplete</h2>
+
+            <p>
+                Complete your profile (department, CGPA, resume) to apply for jobs.
+            </p>
+
+            <a href="/student_profile" class="btn profile-btn">
+                Update Profile
+            </a>
+
         </div>
         {% endif %}
-
 
 
         <!-- OPEN DRIVES -->
@@ -126,10 +134,12 @@
                             </a>
                         </td>
 
-                        <td>{{ app.job.company.company_name }}</td>
-
                         <td>
-
+                            <a href="/company/{{ app.job.company.id }}" class="job-link">
+                                {{ app.job.company.company_name }}
+                            </a>
+                        </td>
+                        <td>
                             <span class="badge
                     {% if app.status == 'Applied' %}badge-applied
                     {% elif app.status == 'Shortlisted' %}badge-shortlisted

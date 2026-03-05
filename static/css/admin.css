@@ -239,18 +239,6 @@ table td:last-child a{
 }
 
 
-.job-link {
-    color: #8FA8FF;
-    text-decoration: none;
-    font-weight: 500;
-    transition: 0.2s ease;
-}
-
-.job-link:hover {
-    color: #ACFF11;
-    text-decoration: underline;
-}
-
 
 
 
@@ -315,21 +303,6 @@ table td:last-child a{
 
 
 
-
-
-
-.job-link{
-color:#8FA8FF;
-text-decoration:none;
-font-weight:500;
-}
-
-.job-link:hover{
-color:#ACFF11;
-text-decoration:underline;
-}
-
-
 /* =========================
    RESUME BUTTON
 ========================= */
@@ -373,4 +346,130 @@ table td:last-child .action-buttons{
 display:flex;
 justify-content:flex-end;
 gap:12px;
+}
+
+
+
+
+
+
+
+
+/* =========================
+   COMPANY LINK STYLE
+========================= */
+
+.company-link{
+    color:#8FA8FF;
+    text-decoration:none;
+    font-weight:600;
+    font-size:15px;
+
+    position:relative;
+
+    transition:all 0.25s ease;
+}
+
+/* underline animation */
+
+.company-link::after{
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:-4px;
+
+    width:0%;
+    height:2px;
+
+    background:linear-gradient(90deg,#8FA8FF,#ACFF11);
+
+    transition:width 0.25s ease;
+}
+
+/* hover effect */
+
+.company-link:hover{
+
+    color:#ACFF11;
+
+    transform:translateX(3px);
+
+}
+
+/* underline grow */
+
+.company-link:hover::after{
+    width:100%;
+}
+
+
+
+
+/* =========================
+   COMPANY PROFILE CARD
+========================= */
+
+.company-profile-card{
+
+    max-width:700px;
+    margin:60px auto;
+
+}
+
+
+
+
+
+
+
+
+
+
+/* subtle job title hover animation */
+
+.job-link{
+
+color:#8FA8FF;
+text-decoration:none;
+font-weight:500;
+
+position:relative;
+
+transition:color 0.2s ease;
+
+}
+
+/* underline */
+
+.job-link::after{
+
+content:"";
+
+position:absolute;
+left:0;
+bottom:-3px;
+
+width:0%;
+height:2px;
+
+background:#ACFF11;
+
+transition:width 0.25s ease;
+
+}
+
+/* hover */
+
+.job-link:hover{
+
+color:#ACFF11;
+
+}
+
+/* animate underline */
+
+.job-link:hover::after{
+
+width:100%;
+
 }

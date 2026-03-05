@@ -6,10 +6,13 @@ body {
     font-family: 'Poppins', sans-serif;
     background: radial-gradient(circle at top left, #0F1B40, #0A1128);
     color: #EAEAEA;
+
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
+    align-items: flex-start;
+
+    min-height: 100vh;
+    padding-top: 60px;
 }
 
 /* =========================

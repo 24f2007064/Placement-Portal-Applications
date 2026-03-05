@@ -14,88 +14,88 @@ All Jobs
 
 <div class="section">
 
-{% if jobs %}
+    {% if jobs %}
 
-<table>
+    <table>
 
-<thead>
-<tr>
-<th>Company</th>
-<th>Title</th>
-<th>Salary</th>
-<th>Status</th>
-<th>Active</th>
-<th>Applications</th>
-</tr>
-</thead>
+        <thead>
+            <tr>
+                <th>Company</th>
+                <th>Title</th>
+                <th>Salary</th>
+                <th>Status</th>
+                <th>Active</th>
+                <th>Applications</th>
+            </tr>
+        </thead>
 
-<tbody>
+        <tbody>
 
-{% for job in jobs %}
+            {% for job in jobs %}
 
-<tr>
+            <tr>
 
-<td>{{ job.company.company_name }}</td>
+                <td>{{ job.company.company_name }}</td>
 
-<td>
+                <td>
 
-<a href="/admin/job/{{ job.id }}" class="job-link">
-{{ job.title }}
-</a>
+                    <a href="/admin/job/{{ job.id }}" class="job-link">
+                        {{ job.title }}
+                    </a>
 
-</td>
+                </td>
 
-<td>{{ job.salary }}</td>
+                <td>{{ job.salary }}</td>
 
-<td>
+                <td>
 
-{% if job.is_approved %}
+                    {% if job.is_approved %}
 
-<span class="badge badge-shortlisted">
-Approved
-</span>
+                    <span class="badge badge-shortlisted">
+                        Approved
+                    </span>
 
-{% else %}
+                    {% else %}
 
-<span class="badge badge-rejected">
-Pending
-</span>
+                    <span class="badge badge-rejected">
+                        Pending
+                    </span>
 
-{% endif %}
+                    {% endif %}
 
-</td>
+                </td>
 
-<td>
+                <td>
 
-{% if job.is_active %}
+                    {% if job.is_active %}
 
-<span class="badge badge-applied">
-Active
-</span>
+                    <span class="badge badge-applied">
+                        Active
+                    </span>
 
-{% else %}
+                    {% else %}
 
-<span class="badge badge-rejected">
-Closed
-</span>
+                    <span class="badge badge-rejected">
+                        Closed
+                    </span>
 
-{% endif %}
+                    {% endif %}
 
-</td>
+                </td>
 
-<td>{{ job.applications|length }}</td>
+                <td>{{ job.applications|length }}</td>
 
-</tr>
+            </tr>
 
-{% endfor %}
+            {% endfor %}
 
-</tbody>
+        </tbody>
 
-</table>
+    </table>
 
-{% else %}
-<p>No jobs found.</p>
-{% endif %}
+    {% else %}
+    <p>No jobs found.</p>
+    {% endif %}
 
 </div>
 

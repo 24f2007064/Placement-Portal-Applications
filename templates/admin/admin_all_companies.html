@@ -14,60 +14,64 @@ All Companies
 
 <div class="section">
 
-{% if companies %}
+    {% if companies %}
 
-<table>
+    <table>
 
-<thead>
-<tr>
-<th>Name</th>
-<th>Email</th>
-<th>Status</th>
-<th>Created At</th>
-</tr>
-</thead>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Created At</th>
+            </tr>
+        </thead>
 
-<tbody>
+        <tbody>
 
-{% for company in companies %}
+            {% for company in companies %}
 
-<tr>
+            <tr>
 
-<td>{{ company.name }}</td>
+                <td>
+                    <a href="/company/{{ company.company_profile.id }}" class="company-link">
+                        {{ company.name }}
+                    </a>
+                </td>
 
-<td>{{ company.email }}</td>
+                <td>{{ company.email }}</td>
 
-<td>
+                <td>
 
-{% if company.is_approved %}
+                    {% if company.is_approved %}
 
-<span class="badge badge-shortlisted">
-Approved
-</span>
+                    <span class="badge badge-shortlisted">
+                        Approved
+                    </span>
 
-{% else %}
+                    {% else %}
 
-<span class="badge badge-rejected">
-Pending
-</span>
+                    <span class="badge badge-rejected">
+                        Pending
+                    </span>
 
-{% endif %}
+                    {% endif %}
 
-</td>
+                </td>
 
-<td>{{ company.created_at.strftime('%Y-%m-%d') }}</td>
+                <td>{{ company.created_at.strftime('%Y-%m-%d') }}</td>
 
-</tr>
+            </tr>
 
-{% endfor %}
+            {% endfor %}
 
-</tbody>
+        </tbody>
 
-</table>
+    </table>
 
-{% else %}
-<p>No companies registered.</p>
-{% endif %}
+    {% else %}
+    <p>No companies registered.</p>
+    {% endif %}
 
 </div>
 
