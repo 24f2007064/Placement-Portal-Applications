@@ -1,13 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Login</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Placement Portal</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
 </head>
 
 <body>
+
+
+    <!-- NAVBAR -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            Placement Portal
+        </div>
+
+        <nav class="nav-links">
+
+            <a href="/" class="nav-link">Home</a>
+
+            <a href="{{ url_for('login') }}" class="nav-link">Login</a>
+
+            <a href="{{ url_for('regester') }}" class="register-btn">Register</a>
+
+        </nav>
+
+    </header>
 
     <div class="login-container">
         <div class="login-card">
@@ -47,6 +75,11 @@
 
         </div>
     </div>
+
+
+    <footer class="footer">
+        © 2026 Placement Portal | All Rights Reserved
+    </footer>
 
 </body>
 

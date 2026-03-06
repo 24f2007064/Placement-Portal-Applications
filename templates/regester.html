@@ -1,82 +1,114 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Register</title>
 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Placement Portal</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
 
 </head>
 
 <body>
 
-<div class="login-container">
-<div class="login-card">
 
-<h2 class="login-title">Create Account</h2>
+    <!-- NAVBAR -->
 
-{% if error %}
-<p class="error-message">{{ error }}</p>
-{% endif %}
+    <header class="navbar">
 
-<form action="/regester" method="POST">
+        <div class="logo">
+            Placement Portal
+        </div>
 
-<div class="input-group">
-<label>Name</label>
-<input type="text" name="name" required>
-</div>
+        <nav class="nav-links">
 
-<div class="input-group">
-<label>Email</label>
-<input type="email" name="email" required>
-</div>
+            <a href="/" class="nav-link">Home</a>
 
-<div class="input-group">
-<label>Password</label>
-<input type="password" name="password" required minlength="6">
-</div>
+            <a href="{{ url_for('login') }}" class="nav-link">Login</a>
 
-<!-- ROLE SELECTOR -->
+            <a href="{{ url_for('regester') }}" class="register-btn">Register</a>
 
-<div class="input-group">
+        </nav>
 
-<label>Account Type</label>
+    </header>
+    <div class="login-container">
+        <div class="login-card">
 
-<div class="role-container">
+            <h2 class="login-title">Create Account</h2>
 
-<input type="radio" id="student" name="role" value="student" required>
-<label for="student" class="role-card">
+            {% if error %}
+            <p class="error-message">{{ error }}</p>
+            {% endif %}
 
-<div class="role-icon">🎓</div>
-<div class="role-title">Student</div>
-<div class="role-desc">Apply to jobs</div>
+            <form action="/regester" method="POST">
 
-</label>
+                <div class="input-group">
+                    <label>Name</label>
+                    <input type="text" name="name" required>
+                </div>
 
-<input type="radio" id="company" name="role" value="company">
-<label for="company" class="role-card">
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" name="email" required>
+                </div>
 
-<div class="role-icon">🏢</div>
-<div class="role-title">Company</div>
-<div class="role-desc">Post jobs</div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" name="password" required minlength="6">
+                </div>
 
-</label>
+                <!-- ROLE SELECTOR -->
 
-</div>
-</div>
+                <div class="input-group">
 
-<button type="submit" class="btn-primary">Register</button>
+                    <label>Account Type</label>
 
-</form>
+                    <div class="role-container">
 
-<p class="register-link">
-Already have an account?
-<a href="{{ url_for('login') }}">Login</a>
-</p>
+                        <input type="radio" id="student" name="role" value="student" required>
+                        <label for="student" class="role-card">
 
-</div>
-</div>
+                            <div class="role-icon">🎓</div>
+                            <div class="role-title">Student</div>
+                            <div class="role-desc">Apply to jobs</div>
+
+                        </label>
+
+                        <input type="radio" id="company" name="role" value="company">
+                        <label for="company" class="role-card">
+
+                            <div class="role-icon">🏢</div>
+                            <div class="role-title">Company</div>
+                            <div class="role-desc">Post jobs</div>
+
+                        </label>
+
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary">Register</button>
+
+            </form>
+
+            <p class="register-link">
+                Already have an account?
+                <a href="{{ url_for('login') }}">Login</a>
+            </p>
+
+        </div>
+    </div>
+
+    <footer class="footer">
+        © 2026 Placement Portal | All Rights Reserved
+    </footer>
+
 
 </body>
+
 </html>

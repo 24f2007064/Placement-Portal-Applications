@@ -182,6 +182,21 @@ class Placement(db.Model):
 
 
 
+
+
+
+
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+
+
+
+
+
+
+
 @app.route("/regester", methods=["GET", "POST"])
 def regester():
     if request.method == "POST":
@@ -192,7 +207,7 @@ def regester():
 
         existing_user = User.query.filter_by(email=email).first()
         if existing_user:
-            return "Email already registered"
+            return render_template("regester.html", error = "Email already registered")
 
         user = User(
             name=name,
@@ -306,10 +321,6 @@ def login():
 
 
 #STUDENT PROFILE
-
-
-
-
 
 
 

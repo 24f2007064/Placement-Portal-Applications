@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Placement Portal</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}">
+
+</head>
+
+<body>
+
+
+    <!-- NAVBAR -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            Placement Portal
+        </div>
+
+        <nav class="nav-links">
+
+            <a href="/" class="nav-link">Home</a>
+
+            <a href="{{ url_for('login') }}" class="nav-link">Login</a>
+
+            <a href="{{ url_for('regester') }}" class="register-btn">Register</a>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <h1>Campus Placement Portal</h1>
+
+        <p>
+            Smart platform connecting Students, Companies, and Admins seamlessly
+        </p>
+
+        <a href="{{ url_for('regester') }}" class="hero-btn">
+            Start Your Journey
+        </a>
+
+    </section>
+
+
+
+    <!-- FEATURES -->
+
+    <section class="features">
+
+        <h2>Why Use Our Portal?</h2>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>Student Management</h3>
+                <p>Create profiles, upload resumes, and track job applications easily.</p>
+            </div>
+
+            <div class="card">
+                <h3>Company Hiring</h3>
+                <p>Companies can post jobs and hire eligible students efficiently.</p>
+            </div>
+
+            <div class="card">
+                <h3>Admin Dashboard</h3>
+                <p>Complete control over approvals, users, and placement records.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <footer class="footer">
+        © 2026 Placement Portal | All Rights Reserved
+    </footer>
+
+
+</body>
+
+</html>
