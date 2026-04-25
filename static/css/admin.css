@@ -1,521 +1,281 @@
 /* =========================
-   GLOBAL
+   FONTS
 ========================= */
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap');
 
-body {
-    background: radial-gradient(circle at 20% 10%, #14205A, #0A1128 60%);
-    color: #EAEAEA;
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
+/* =========================
+   VARIABLES
+========================= */
+:root {
+  --bg-deep:   #060C1E;
+  --bg-mid:    #0B1230;
+  --bg-card:   #0F1A3A;
+  --bg-card2:  #111E42;
+  --accent:    #B8FF2E;
+  --accent2:   #00D4A8;
+  --blue-soft: #7B9FFF;
+  --text:      #E8EDF8;
+  --text-dim:  #8A9CC8;
+  --border:    rgba(255,255,255,0.05);
+  --border2:   rgba(123,159,255,0.15);
+  --error:     #FF5A5A;
+  --success:   #00C896;
 }
 
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg-deep);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(123,159,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(123,159,255,0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* =========================
+   LAYOUT
+========================= */
 .container {
-    width: 92%;
-    margin: 60px auto;
+  width: 92%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 52px 0 80px;
+  flex: 1;
+  position: relative;
+  z-index: 1;
 }
 
 /* =========================
    TOP BAR
 ========================= */
-
 .top-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 56px;
 }
 
 .title {
-    font-size: 34px;
-    font-weight: 600;
-    color: #FFFFFF;
-}
-
-/* Logout Button */
-.logout-btn {
-    background: rgba(255, 76, 76, 0.15);
-    color: #FF4C4C;
-    padding: 10px 20px;
-    border-radius: 16px;
-    text-decoration: none !important;
-    font-weight: 600;
-    border: 1px solid rgba(255, 76, 76, 0.35);
-    transition: 0.3s ease;
-}
-
-.logout-btn:hover {
-    background: linear-gradient(135deg, #FF4C4C, #D63030);
-    color: white;
-    transform: translateY(-4px);
-    box-shadow: 0 15px 30px rgba(255, 76, 76, 0.35);
+  font-family: 'Syne', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.8px;
 }
 
 /* =========================
-   STATS
+   STATS GRID
 ========================= */
-
 .stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 30px;
-    margin-bottom: 70px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  margin-bottom: 60px;
 }
 
 .card {
-    background: linear-gradient(145deg, #121A3A, #0F1735);
-    padding: 32px;
-    border-radius: 24px;
-    border: 1px solid rgba(255,255,255,0.06);
-    transition: 0.3s ease;
+  background: linear-gradient(160deg, var(--bg-card), var(--bg-card2));
+  padding: 32px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  min-height: 160px;
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  bottom: -30%;
+  right: -15%;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(123,159,255,0.08), transparent);
+  pointer-events: none;
 }
 
 .card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 45px rgba(0,0,0,0.45);
+  transform: translateY(-6px);
+  border-color: var(--border2);
+  box-shadow: 0 24px 55px rgba(0,0,0,0.5);
 }
 
 .card h3 {
-    font-size: 13px;
-    color: #8FA8FF;
-    margin-bottom: 20px;
-    text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 20px;
 }
 
 .card p {
-    font-size: 42px;
-    font-weight: 700;
+  font-family: 'Syne', sans-serif;
+  font-size: 44px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -1px;
+  line-height: 1;
+}
+
+.card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
 
 /* =========================
-   SECTION
+   SECTIONS
 ========================= */
-
 .section {
-    background: linear-gradient(145deg, #111936, #0F1732);
-    padding: 40px;
-    margin-bottom: 55px;
-    border-radius: 24px;
-    border: 1px solid rgba(255,255,255,0.05);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  background: linear-gradient(160deg, var(--bg-card), var(--bg-card2));
+  padding: 36px 40px;
+  margin-bottom: 30px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+  transition: border-color 0.25s;
 }
 
+.section:hover { border-color: var(--border2); }
+
 .section h2 {
-    font-size: 22px;
-    margin-bottom: 30px;
+  font-family: 'Syne', sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 28px;
+  letter-spacing: -0.3px;
 }
 
 /* =========================
    TABLE
 ========================= */
-
-table{
-    width:100%;
-    border-collapse:separate;
-    border-spacing:0 12px;
+table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-table th{
-    padding:16px 18px;
-    font-size:13px;
-    color:#8FA8FF;
-    text-align:left;
+thead tr { border-bottom: 1px solid var(--border); }
+
+table th {
+  padding: 0 16px 14px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--text-dim);
+  text-align: left;
 }
 
-table tr{
-    background:linear-gradient(145deg,#111936,#0F1732);
-}
-table td{
-    padding:20px 18px;
-    background:transparent;
-}
-
-/* rounded row cards */
-
-table tr td:first-child{
-    border-radius:14px 0 0 14px;
+table td {
+  padding: 16px 16px;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  vertical-align: middle;
 }
 
-table tr td:last-child{
-    border-radius:0 14px 14px 0;
-}
-
-/* hover */
-
-
+table tbody tr { transition: background 0.2s; }
+table tbody tr:hover { background: rgba(123,159,255,0.04); }
+table tbody tr:last-child td { border-bottom: none; }
 
 /* CGPA highlight */
+table td:nth-child(3) { color: var(--accent); font-weight: 600; }
 
-table td:nth-child(3){
-    color:#ACFF11;
-    font-weight:600;
-}
+/* Student name */
+table td:first-child { font-weight: 600; color: #fff; }
 
-/* student name */
+/* Action column */
+table th:last-child, table td:last-child { text-align: right; }
 
-table td:first-child{
-    font-weight:600;
-    color:#ffffff;
-}
-
-/* action column */
-
-table td:last-child{
-    text-align:left;
-    /*white-space:nowrap;*/
-}
-
-table td:last-child a{
-    margin-left:6px;
-}
-
-/* =========================
-   BUTTONS
-========================= */
-
-.btn {
-    padding: 10px 18px;
-    border-radius: 16px;
-    font-size: 13px;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
-    transition: 0.3s ease;
-    text-decoration: none !important;
-}
-
-.approve {
-    background: rgba(172, 255, 17, 0.15);
-    color: #ACFF11;
-    border: 1px solid rgba(172, 255, 17, 0.4);
-}
-
-.approve:hover {
-    background: linear-gradient(135deg, #ACFF11, #00C9A7);
-    color: #0A1128;
-    transform: translateY(-4px);
-}
-
-.reject {
-    background: rgba(255, 76, 76, 0.15);
-    color: #FF4C4C;
-    border: 1px solid rgba(255, 76, 76, 0.4);
-}
-
-.reject:hover {
-    background: linear-gradient(135deg, #FF4C4C, #D63030);
-    color: white;
-    transform: translateY(-4px);
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 /* =========================
    BADGES
 ========================= */
-
 .badge {
-    padding: 7px 16px;
-    border-radius: 30px;
-    font-size: 12px;
-    font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 14px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
 }
 
-.badge-applied {
-    background: rgba(143,168,255,0.15);
-    color: #8FA8FF;
-}
-
-.badge-shortlisted {
-    background: rgba(172,255,17,0.15);
-    color: #ACFF11;
-}
-
-.badge-rejected {
-    background: rgba(255,76,76,0.15);
-    color: #FF4C4C;
-}
-
-.badge-placed {
-    background: rgba(0,200,150,0.15);
-    color: #00C896;
-}
-
-
-
-
-
-
-
+.badge-applied    { background: rgba(123,159,255,0.12); color: var(--blue-soft); border: 1px solid rgba(123,159,255,0.2); }
+.badge-shortlisted{ background: rgba(184,255,46,0.1);   color: var(--accent);    border: 1px solid rgba(184,255,46,0.25); }
+.badge-rejected   { background: rgba(255,90,90,0.1);    color: var(--error);     border: 1px solid rgba(255,90,90,0.2); }
+.badge-placed     { background: rgba(0,200,150,0.1);    color: var(--success);   border: 1px solid rgba(0,200,150,0.2); }
 
 /* =========================
-   BACK BUTTON (ADMIN DETAIL)
+   LINKS
 ========================= */
+.company-link, .job-link {
+  color: var(--blue-soft);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+.company-link:hover, .job-link:hover { color: var(--accent); }
 
-.back-btn {
-    background: rgba(143,168,255,0.12);
-    color: #8FA8FF;
-    border: 1px solid rgba(143,168,255,0.35);
-    padding: 10px 20px;
-    border-radius: 16px;
-    font-weight: 600;
-    transition: 0.3s ease;
+.resume-btn {
+  background: rgba(123,159,255,0.1);
+  color: var(--blue-soft);
+  border: 1px solid var(--border2);
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.2s;
 }
 
-.back-btn:hover {
-    background: linear-gradient(135deg, #8FA8FF, #ACFF11);
-    color: #0A1128;
-    transform: translateY(-3px);
-    box-shadow: 0 15px 30px rgba(143,168,255,0.35);
+.resume-btn:hover {
+  background: linear-gradient(135deg, var(--blue-soft), var(--accent));
+  color: var(--bg-deep);
+  transform: translateY(-2px);
 }
-
-
-
-.back-btn {
-    background: rgba(143,168,255,0.15);
-    color: #8FA8FF;
-    border: 1px solid rgba(143,168,255,0.4);
-}
-
-.back-btn:hover {
-    background: linear-gradient(135deg, #8FA8FF, #6C8CFF);
-    color: #0A1128;
-    transform: translateY(-4px);
-}
-
-
-
-.card-link {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-}
-
-.card-link:hover .card {
-    transform: translateY(-8px);
-    box-shadow: 0 25px 55px rgba(0,0,0,0.55);
-    cursor: pointer;
-}
-
-.card {
-    min-height: 190px;
-}
-
-
-
-
-
-
-/* =========================
-   RESUME BUTTON
-========================= */
-
-.resume-btn{
-    background: rgba(143,168,255,0.15);
-    color:#8FA8FF;
-    border:1px solid rgba(143,168,255,0.35);
-    padding:10px 18px;
-    border-radius:16px;
-    font-size:13px;
-    font-weight:600;
-    text-decoration:none;
-    display:inline-block;
-    transition: all 0.3s ease;
-}
-
-/* Hover animation */
-
-.resume-btn:hover{
-    background: linear-gradient(135deg,#8FA8FF,#ACFF11);
-    color:#0A1128;
-
-    transform: translateY(-4px) scale(1.04);
-
-    box-shadow:
-        0 10px 20px rgba(0,0,0,0.25),
-        0 8px 30px rgba(143,168,255,0.35);
-
-}
-
-/* ACTION COLUMN ALIGNMENT */
-
-table th:last-child,
-table td:last-child{
-text-align:right;
-padding-right:0;
-}
-
-table td:last-child .action-buttons{
-display:flex;
-justify-content:flex-end;
-gap:12px;
-}
-
-
-
-
-
-
-
-
-/* =========================
-   COMPANY LINK STYLE
-========================= */
-
-.company-link{
-    color:#8FA8FF;
-    text-decoration:none;
-    font-weight:600;
-    font-size:15px;
-
-    position:relative;
-
-    transition:all 0.25s ease;
-}
-
-/* underline animation */
-
-.company-link::after{
-    content:"";
-    position:absolute;
-    left:0;
-    bottom:-4px;
-
-    width:0%;
-    height:2px;
-
-    background:linear-gradient(90deg,#8FA8FF,#ACFF11);
-
-    transition:width 0.25s ease;
-}
-
-/* hover effect */
-
-.company-link:hover{
-
-    color:#ACFF11;
-
-    transform:translateX(3px);
-
-}
-
-/* underline grow */
-
-.company-link:hover::after{
-    width:100%;
-}
-
-
-
 
 /* =========================
    COMPANY PROFILE CARD
 ========================= */
-
-.company-profile-card{
-
-    max-width:700px;
-    margin:60px auto;
-
+.company-profile-card {
+  max-width: 680px;
+  margin: 60px auto;
 }
-
-
-
-
-
-
-
-
-
-
-/* subtle job title hover animation */
-
-.job-link{
-
-color:#8FA8FF;
-text-decoration:none;
-font-weight:500;
-
-position:relative;
-
-transition:color 0.2s ease;
-
-}
-
-/* underline */
-
-.job-link::after{
-
-content:"";
-
-position:absolute;
-left:0;
-bottom:-3px;
-
-width:0%;
-height:2px;
-
-background:#ACFF11;
-
-transition:width 0.25s ease;
-
-}
-
-/* hover */
-
-.job-link:hover{
-
-color:#ACFF11;
-
-}
-
-/* animate underline */
-
-.job-link:hover::after{
-
-width:100%;
-
-}
-
-
-
-
-
-
-/* make page fill the screen */
-html, body{
-    height:100%;
-}
-
-/* layout wrapper */
-body{
-    display:flex;
-    flex-direction:column;
-}
-
-/* push footer down */
-.container{
-    flex:1;
-}
-
-
 
 /* =========================
    FOOTER
 ========================= */
-
-footer{
-    width:100%;
-    text-align:center;
-
-    padding:22px 0;
-    margin-top:60px;
-
-    font-size:14px;
-    color:#8FA8FF;
-
-    background:linear-gradient(145deg,#0F1732,#0A1128);
-
-    border-top:1px solid rgba(255,255,255,0.05);
-
-    letter-spacing:0.5px;
-
-    opacity:0.9;
+footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 24px;
+  color: var(--text-dim);
+  border-top: 1px solid var(--border);
+  font-size: 13px;
 }

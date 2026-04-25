@@ -1,87 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Placement Portal</title>
-    
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — Placement Portal</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-
 <body>
 
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="logo">Placement Portal</div>
+    <nav class="nav-links">
+      <a href="/" class="nav-link">Home</a>
+      <a href="{{ url_for('login') }}" class="nav-link active">Login</a>
+      <a href="{{ url_for('regester') }}" class="register-btn">Register</a>
+    </nav>
+  </header>
 
-    <!-- NAVBAR -->
+  <div class="login-container">
+    <div class="login-card">
 
-    <header class="navbar">
+      <h2 class="login-title">Welcome back</h2>
 
-        <div class="logo">
-            Re Phrase
+      {% if error %}
+      <p class="error-message">{{ error }}</p>
+      {% endif %}
+
+      <form action="/login" method="POST">
+
+        <div class="input-group">
+          <label>Email</label>
+          <input type="email" name="email" placeholder="you@example.com" required>
         </div>
 
-        <nav class="nav-links">
-
-            <a href="/" class="nav-link">Home</a>
-
-            <a href="{{ url_for('login') }}" class="nav-link">Login</a>
-
-            <a href="{{ url_for('regester') }}" class="register-btn">Register</a>
-
-        </nav>
-
-    </header>
-
-    <div class="login-container">
-        <div class="login-card">
-
-            <h2 class="login-title">Welcome Back</h2>
-
-
-            {% if error %}
-            <p class="error-message">{{ error }}</p>
-            {% endif %}
-
-
-
-
-
-
-            <form action="/login" method="POST">
-
-                <div class="input-group">
-                    <label>Email</label>
-                    <input type="email" name="email" required>
-                </div>
-
-                <div class="input-group">
-                    <label>Password</label>
-                    <input type="password" name="password" required>
-                </div>
-
-                <button type="submit" class="btn-primary">Login</button>
-
-            </form>
-
-            <p class="register-link">
-                Don’t have an account?
-                <a href="{{ url_for('regester') }}">Register</a>
-            </p>
-
+        <div class="input-group">
+          <label>Password</label>
+          <input type="password" name="password" placeholder="••••••••" required>
         </div>
+
+        <button type="submit" class="btn-primary" style="width:100%; justify-content:center; margin-top:8px;">
+          Sign In →
+        </button>
+
+      </form>
+
+      <p class="register-link">
+        Don't have an account? <a href="{{ url_for('regester') }}">Create one</a>
+      </p>
+
     </div>
+  </div>
 
-
-    <footer class="footer">
-        © 2026 Placement Portal | All Rights Reserved
-    </footer>
+  <footer class="footer">© 2026 Placement Portal — All Rights Reserved</footer>
 
 </body>
-
 </html>

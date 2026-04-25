@@ -1,126 +1,153 @@
 /* =========================
-   BACKGROUND
+   FONTS
 ========================= */
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap');
+
+:root {
+  --bg-deep:   #060C1E;
+  --bg-card:   #0F1A3A;
+  --bg-card2:  #111E42;
+  --accent:    #B8FF2E;
+  --accent2:   #00D4A8;
+  --blue-soft: #7B9FFF;
+  --text:      #E8EDF8;
+  --text-dim:  #8A9CC8;
+  --border:    rgba(255,255,255,0.06);
+  --border2:   rgba(123,159,255,0.2);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* =========================
+   CARD HEADER (back btn above title)
+========================= */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;   
+  margin-bottom: 36px;
+}
+
+
 body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background: radial-gradient(circle at top left, #0F1B40, #0A1128);
-    color: #EAEAEA;
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg-deep);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 64px 24px;
+}
 
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-
-    min-height: 100vh;
-    padding-top: 60px;
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(123,159,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(123,159,255,0.03) 1px, transparent 1px);
+  background-size: 55px 55px;
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* =========================
    CARD
 ========================= */
 .job-card {
-    width: 480px;
-    padding: 45px;
-    border-radius: 24px;
-    background: linear-gradient(145deg, #121A3A, #0F1735);
-    border: 1px solid rgba(255,255,255,0.06);
-    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-    position: relative;
-    overflow: hidden;
+  width: 500px;
+  padding: 48px;
+  border-radius: 24px;
+  background: linear-gradient(160deg, var(--bg-card), var(--bg-card2));
+  border: 1px solid var(--border2);
+  box-shadow: 0 40px 80px rgba(0,0,0,0.55);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
 }
 
-/* top accent glow */
+/* Top accent bar */
 .job-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 4px;
-    width: 100%;
-    background: linear-gradient(90deg, #ACFF11, #00C9A7);
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
 }
 
-/* =========================
-   TITLE
-========================= */
 .job-card h2 {
-    margin-bottom: 35px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    color: #FFFFFF;
+  font-family: 'Syne', sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 36px;
+  letter-spacing: -0.5px;
 }
 
 /* =========================
    INPUT GROUP
 ========================= */
 .input-group {
-    margin-bottom: 25px;
+  margin-bottom: 22px;
 }
 
 .input-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 13px;
-    color: #8FA8FF;
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
+  display: block;
+  margin-bottom: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-dim);
 }
 
-.input-group input {
-    width: 100%;
-    padding: 14px;
-    border-radius: 12px;
-    border: 1px solid #1F2A55;
-    background: #0F1B40;
-    color: #FFFFFF;
-    font-size: 14px;
-    transition: 0.3s ease;
+.input-group input,
+.input-group textarea {
+  width: 100%;
+  padding: 13px 16px;
+  border: 1px solid rgba(123,159,255,0.2);
+  border-radius: 12px;
+  background: rgba(6,12,30,0.7);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.25s ease;
+  resize: none;
 }
 
-/* focus effect */
-.input-group input:focus {
-    outline: none;
-    border-color: #ACFF11;
-    box-shadow: 0 0 12px rgba(172, 255, 17, 0.4);
+.input-group input:focus,
+.input-group textarea:focus {
+  border-color: var(--accent);
+  background: rgba(6,12,30,0.9);
+  box-shadow: 0 0 0 3px rgba(184,255,46,0.1);
+}
+
+.input-group input::placeholder,
+.input-group textarea::placeholder {
+  color: rgba(138,156,200,0.45);
 }
 
 /* =========================
    BUTTON
 ========================= */
 .btn-create {
-    width: 100%;
-    padding: 14px;
-    border-radius: 14px;
-    border: none;
-    font-weight: 600;
-    font-size: 15px;
-    cursor: pointer;
-    background: linear-gradient(135deg, #ACFF11, #00C9A7);
-    color: #0A1128;
-    transition: 0.3s ease;
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: var(--bg-deep);
+  transition: all 0.25s ease;
+  margin-top: 8px;
 }
 
 .btn-create:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 18px 35px rgba(172, 255, 17, 0.35);
-}
-
-
-/* TEXTAREA STYLE */
-.input-group textarea {
-    width: 100%;
-    padding: 14px;
-    border-radius: 12px;
-    border: 1px solid #1F2A55;
-    background: #0F1B40;
-    color: #FFFFFF;
-    font-size: 14px;
-    resize: none;
-    transition: 0.3s ease;
-}
-
-.input-group textarea:focus {
-    outline: none;
-    border-color: #ACFF11;
-    box-shadow: 0 0 12px rgba(172, 255, 17, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px rgba(184,255,46,0.35);
 }

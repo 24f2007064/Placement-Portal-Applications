@@ -1,115 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Re Phrase</title>
-    
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register — Placement Portal</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-
 <body>
 
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="logo">Placement Portal</div>
+    <nav class="nav-links">
+      <a href="/" class="nav-link">Home</a>
+      <a href="{{ url_for('login') }}" class="nav-link">Login</a>
+      <a href="{{ url_for('regester') }}" class="register-btn active">Register</a>
+    </nav>
+  </header>
 
-    <!-- NAVBAR -->
+  <div class="login-container">
+    <div class="login-card">
 
-    <header class="navbar">
+      <h2 class="login-title">Create account</h2>
 
-        <div class="logo">
-            Placement Portal
+      {% if error %}
+      <p class="error-message">{{ error }}</p>
+      {% endif %}
+
+      <form action="/regester" method="POST">
+
+        <div class="input-group">
+          <label>Full Name</label>
+          <input type="text" name="name" placeholder="Anirban Das" required>
         </div>
 
-        <nav class="nav-links">
-
-            <a href="/" class="nav-link">Home</a>
-
-            <a href="{{ url_for('login') }}" class="nav-link">Login</a>
-
-            <a href="{{ url_for('regester') }}" class="register-btn">Register</a>
-
-        </nav>
-
-    </header>
-    <div class="login-container">
-        <div class="login-card">
-
-            <h2 class="login-title">Create Account</h2>
-
-            {% if error %}
-            <p class="error-message">{{ error }}</p>
-            {% endif %}
-
-            <form action="/regester" method="POST">
-
-                <div class="input-group">
-                    <label>Name</label>
-                    <input type="text" name="name" required>
-                </div>
-
-                <div class="input-group">
-                    <label>Email</label>
-                    <input type="email" name="email" required>
-                </div>
-
-                <div class="input-group">
-                    <label>Password</label>
-                    <input type="password" name="password" required minlength="6">
-                </div>
-
-                <!-- ROLE SELECTOR -->
-
-                <div class="input-group">
-
-                    <label>Account Type</label>
-
-                    <div class="role-container">
-
-                        <input type="radio" id="student" name="role" value="student" required>
-                        <label for="student" class="role-card">
-
-                            <div class="role-icon">🎓</div>
-                            <div class="role-title">Student</div>
-                            <div class="role-desc">Apply to jobs</div>
-
-                        </label>
-
-                        <input type="radio" id="company" name="role" value="company">
-                        <label for="company" class="role-card">
-
-                            <div class="role-icon">🏢</div>
-                            <div class="role-title">Company</div>
-                            <div class="role-desc">Post jobs</div>
-
-                        </label>
-
-                    </div>
-                </div>
-
-                <button type="submit" class="btn-primary">Register</button>
-
-            </form>
-
-            <p class="register-link">
-                Already have an account?
-                <a href="{{ url_for('login') }}">Login</a>
-            </p>
-
+        <div class="input-group">
+          <label>Email</label>
+          <input type="email" name="email" placeholder="you@college.edu" required>
         </div>
+
+        <div class="input-group">
+          <label>Password</label>
+          <input type="password" name="password" placeholder="Min. 6 characters" required minlength="6">
+        </div>
+
+        <!-- ROLE SELECTOR -->
+        <div class="input-group">
+          <label>Account Type</label>
+          <div class="role-container">
+
+            <input type="radio" id="student" name="role" value="student" required>
+            <label for="student" class="role-card">
+              <div class="role-icon">🎓</div>
+              <div class="role-title">Student</div>
+              <div class="role-desc">Apply to drives</div>
+            </label>
+
+            <input type="radio" id="company" name="role" value="company">
+            <label for="company" class="role-card">
+              <div class="role-icon">🏢</div>
+              <div class="role-title">Company</div>
+              <div class="role-desc">Post jobs</div>
+            </label>
+
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary" style="width:100%; justify-content:center; margin-top:8px;">
+          Create Account →
+        </button>
+
+      </form>
+
+      <p class="register-link">
+        Already have an account? <a href="{{ url_for('login') }}">Sign in</a>
+      </p>
+
     </div>
+  </div>
 
-    <footer class="footer">
-        © 2026 Placement Portal | All Rights Reserved
-    </footer>
-
+  <footer class="footer">© 2026 Placement Portal — All Rights Reserved</footer>
 
 </body>
-
 </html>

@@ -1,96 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Re Phrase</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Placement Portal</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}">
 </head>
-
 <body>
 
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="logo">Placement Portal</div>
+    <nav class="nav-links">
+      <a href="/" class="nav-link active">Home</a>
+      <a href="{{ url_for('login') }}" class="nav-link">Login</a>
+      <a href="{{ url_for('regester') }}" class="register-btn">Register</a>
+    </nav>
+  </header>
 
-    <!-- NAVBAR -->
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow">Campus Placements 2026</div>
+    <h1>Your career starts<br><span>right here.</span></h1>
+    <p>One platform for students, companies, and admins. Apply to drives, post jobs, and manage placements — all in one place.</p>
+    <div class="hero-actions">
+      <a href="{{ url_for('regester') }}" class="hero-btn">Get Started →</a>
+      <a href="{{ url_for('login') }}" class="hero-btn-ghost">Sign In</a>
+    </div>
+  </section>
 
-    <header class="navbar">
+  <!-- FEATURES -->
+  <section class="features">
+    <p class="features-label">What we offer</p>
+    <h2>Everything you need, nothing you don't.</h2>
+    <div class="cards">
 
-        <div class="logo">
-            Placement Portal
-        </div>
+      <div class="card">
+        <span class="card-icon">🎓</span>
+        <h3>Student Management</h3>
+        <p>Build your profile, upload your resume, and track every application in one clean dashboard.</p>
+      </div>
 
-        <nav class="nav-links">
+      <div class="card">
+        <span class="card-icon">🏢</span>
+        <h3>Company Hiring</h3>
+        <p>Post job drives, browse eligible candidates, and manage shortlisting and selections effortlessly.</p>
+      </div>
 
-            <a href="/" class="nav-link">Home</a>
+      <div class="card">
+        <span class="card-icon">⚙️</span>
+        <h3>Admin Control</h3>
+        <p>Full oversight of users, approvals, placement records, and real-time analytics.</p>
+      </div>
 
-            <a href="{{ url_for('login') }}" class="nav-link">Login</a>
+    </div>
+  </section>
 
-            <a href="{{ url_for('regester') }}" class="register-btn">Register</a>
-
-        </nav>
-
-    </header>
-
-
-
-    <!-- HERO -->
-
-    <section class="hero">
-
-        <h1>Campus Placement Portal</h1>
-
-        <p>
-            Smart platform connecting Students, Companies, and Admins seamlessly
-        </p>
-
-        <a href="{{ url_for('regester') }}" class="hero-btn">
-            Start Your Journey
-        </a>
-
-    </section>
-
-
-
-    <!-- FEATURES -->
-
-    <section class="features">
-
-        <h2>Why Use Our Portal?</h2>
-
-        <div class="cards">
-
-            <div class="card">
-                <h3>Student Management</h3>
-                <p>Create profiles, upload resumes, and track job applications easily.</p>
-            </div>
-
-            <div class="card">
-                <h3>Company Hiring</h3>
-                <p>Companies can post jobs and hire eligible students efficiently.</p>
-            </div>
-
-            <div class="card">
-                <h3>Admin Dashboard</h3>
-                <p>Complete control over approvals, users, and placement records.</p>
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <footer class="footer">
-        © 2026 Placement Portal | All Rights Reserved
-    </footer>
-
+  <footer class="footer">
+    © 2026 Placement Portal — All Rights Reserved
+  </footer>
 
 </body>
-
 </html>

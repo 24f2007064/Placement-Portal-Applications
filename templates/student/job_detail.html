@@ -1,43 +1,50 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>Job Detail</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/student.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}">
+  <title>{{ job.title }} — Placement Portal</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/student.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}">
 </head>
-
 <body>
-    
 
-    <div class="container">
+<div class="container">
 
-        <div class="top-bar">
+  <div class="top-bar">
+    <h1 class="title">{{ job.title }}</h1>
+    <a href="{{ url_for('student_dashboard') }}" class="btn back-btn">← Back</a>
+  </div>
 
-        <h1 class="title">{{ job.title }}</h1>
+  <div class="section">
 
-        <a href="{{ url_for('student_dashboard') }}" class="btn back-btn">
-            ← Back
-        </a>
+    <div style="display:flex; flex-wrap:wrap; gap:32px; margin-bottom:28px;">
+
+      <div>
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--text-dim); margin-bottom:6px;">Company</div>
+        <div style="font-weight:600; font-size:15px;">{{ job.company.company_name }}</div>
+      </div>
+
+      <div>
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--text-dim); margin-bottom:6px;">Salary</div>
+        <div style="font-weight:600; font-size:15px; color:var(--accent);">{{ job.salary }}</div>
+      </div>
+
+      <div>
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--text-dim); margin-bottom:6px;">Skills Required</div>
+        <div style="font-weight:600; font-size:15px; color:var(--blue-soft);">{{ job.skills }}</div>
+      </div>
 
     </div>
 
-        <div class="section">
-
-            <p><b>Company:</b> {{ job.company.company_name }}</p>
-            <p><b>Skills:</b> {{ job.skills }}</p>
-            <p><b>Salary:</b> {{ job.salary }}</p>
-
-            <hr>
-
-            <h3>Description</h3>
-
-            <p>{{ job.description }}</p>
-
-        </div>
-
+    <div style="border-top: 1px solid var(--border); padding-top: 28px;">
+      <h2 style="font-size:16px; margin-bottom:14px;">Job Description</h2>
+      <p style="color:var(--text-dim); line-height:1.75; font-size:14px;">{{ job.description }}</p>
     </div>
+
+  </div>
+
+</div>
+
+<footer>© 2026 Placement Portal — All Rights Reserved</footer>
 
 </body>
-
 </html>

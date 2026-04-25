@@ -1,192 +1,196 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>Student Dashboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/student.css') }}">
+  <title>Student Dashboard — Placement Portal</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/student.css') }}">
 </head>
-
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <div class="top-bar">
+  <!-- =====================
+       TOP BAR
+  ===================== -->
+  <div class="top-bar">
 
-            <h1 class="title">Student Dashboard</h1>
-
-            <div class="top-actions">
-
-                <a href="/student_profile" class="btn profile-btn">
-                    Profile
-                </a>
-
-                <a href="/logout" class="btn logout-btn">
-                    Logout
-                </a>
-
-            </div>
-
-        </div>
-        <div class="search-container">
-
-            <h2>Open Approved Drives</h2>
-
-            <form action="/search_jobs" class="search-bar">
-
-                <input type="text" name="q" placeholder="Search jobs by title or skills..." required>
-
-                <button class="search-btn">
-                    Search
-                </button>
-
-            </form>
-
-        </div>
-
-        {% if not profile_complete %}
-        <div class="section profile-warning">
-
-            <h2>⚠ Profile Incomplete</h2>
-
-            <p>
-                Complete your profile (department, CGPA, resume) to apply for jobs.
-            </p>
-
-            <a href="/student_profile" class="btn profile-btn">
-                Update Profile
-            </a>
-
-        </div>
-        {% endif %}
-
-
-        <!-- OPEN DRIVES -->
-        <div class="section">
-
-            <h2>Open Approved Drives</h2>
-
-            {% if jobs %}
-            <table>
-                <thead>
-                    <tr>
-                        <th>Job</th>
-                        <th>Company</th>
-                        <th>Skills</th>
-                        <th>Salary</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-
-                    {% for job in jobs %}
-                    <tr>
-
-                        <td>
-                            <a href="{{ url_for('job_detail', job_id=job.id) }}" class="job-link">
-                                {{ job.title }}
-                            </a>
-                        </td>
-
-                        <td>{{ job.company.company_name }}</td>
-
-                        <td>{{ job.skills }}</td>
-
-                        <td>{{ job.salary }}</td>
-
-                        <td>
-
-                            {% if profile_complete %}
-                            <a href="/apply_job/{{ job.id }}" class="btn approve">Apply</a>
-                            {% else %}
-                            <span style="opacity:0.6;">Complete Profile</span>
-                            {% endif %}
-
-                        </td>
-
-                    </tr>
-                    {% endfor %}
-
-                </tbody>
-            </table>
-
-            {% else %}
-            <p>No open drives.</p>
-            {% endif %}
-
-        </div>
-
-
-
-        <!-- MY APPLICATIONS -->
-        <div class="section">
-
-            <h2>My Applications</h2>
-
-            
-
-            {% if applications %}
-            <table>
-
-                <thead>
-                    <tr>
-                        <th>Job</th>
-                        <th>Company</th>
-                        <th>Status</th>
-                        <th>Applied On</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-
-                    {% for app in applications %}
-
-                    <tr>
-
-                        <td>
-                            <a href="{{ url_for('job_detail', job_id=app.job.id) }}" class="job-link">
-                                {{ app.job.title }}
-                            </a>
-                        </td>
-
-                        <td>
-                            <a href="/company/{{ app.job.company.id }}" class="job-link">
-                                {{ app.job.company.company_name }}
-                            </a>
-                        </td>
-                        <td>
-                            <span class="badge
-                    {% if app.status == 'Applied' %}badge-applied
-                    {% elif app.status == 'Shortlisted' %}badge-shortlisted
-                    {% elif app.status == 'Rejected' %}badge-rejected
-                    {% elif app.status == 'Placed' %}badge-placed
-                    {% endif %}
-                    ">
-                                {{ app.status }}
-                            </span>
-
-                        </td>
-
-                        <td>{{ app.applied_at.strftime('%Y-%m-%d') }}</td>
-
-                    </tr>
-
-                    {% endfor %}
-
-                </tbody>
-
-            </table>
-
-            {% else %}
-            <p>No applications yet.</p>
-            {% endif %}
-
-        </div>
-
+    <!-- Greeting replaces plain title -->
+    <div class="greeting">
+      <div class="greeting-sub">Welcome back</div>
+      <div class="greeting-name">
+        {{ student.user.name.split()[0] }}<span>.</span>
+      </div>
     </div>
 
-</body>
+    <div class="top-actions">
 
+      <!-- Notification Bell with unread dot -->
+      <a href="#" class="notif-btn" title="Notifications">
+        🔔
+        {% set unread = student.user.notifications | selectattr('is_read', 'equalto', false) | list %}
+        {% if unread %}
+        <span class="notif-dot"></span>
+        {% endif %}
+      </a>
+
+      <a href="/student_profile" class="btn profile-btn">⚙ Profile</a>
+      <a href="/logout" class="btn logout-btn">Logout</a>
+
+    </div>
+  </div>
+
+
+  <!-- =====================
+       PROFILE WARNING — stronger, horizontal layout
+  ===================== -->
+  {% if not profile_complete %}
+  <div class="section profile-warning">
+    <div class="profile-warning-text">
+      <h2>⚠ Profile incomplete</h2>
+      <p>Add your department, CGPA, and resume link to unlock job applications.</p>
+    </div>
+    <a href="/student_profile" class="btn profile-btn">Complete Profile →</a>
+  </div>
+  {% endif %}
+
+
+  <!-- =====================
+       OPEN DRIVES — title once, search inside section
+  ===================== -->
+  <div class="section">
+
+    <div class="section-header">
+      <h2>Open Approved Drives</h2>
+      <form action="/search_jobs" class="search-bar">
+        <input type="text" name="q" placeholder="Search by title or skill…" required>
+        <button class="search-btn">Search</button>
+      </form>
+    </div>
+
+    {% if jobs %}
+    <table>
+      <thead>
+        <tr>
+          <th>Job</th>
+          <th>Company</th>
+          <th>Skills</th>
+          <th>Salary</th>
+          <th style="text-align:right;">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for job in jobs %}
+        <tr>
+
+          <td>
+            <a href="{{ url_for('job_detail', job_id=job.id) }}" class="job-link">
+              {{ job.title }}
+            </a>
+          </td>
+
+          <td style="color:var(--text-dim);">{{ job.company.company_name }}</td>
+
+          <!-- Skill chips instead of raw comma-separated text -->
+          <td>
+            <div class="skill-chips">
+              {% for skill in job.skills.split(',') %}
+              <span class="chip">{{ skill.strip() }}</span>
+              {% endfor %}
+            </div>
+          </td>
+
+          <td><span class="salary-val">{{ job.salary }}</span></td>
+
+          <td style="text-align:right;">
+            {% if profile_complete %}
+            <a href="/apply_job/{{ job.id }}" class="btn apply-btn">Apply</a>
+            {% else %}
+            <span style="color:var(--text-dim);font-size:12px;">Complete profile first</span>
+            {% endif %}
+          </td>
+
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p>No open drives available right now.</p>
+    {% endif %}
+
+  </div>
+
+
+  <!-- =====================
+       MY APPLICATIONS — now with History column
+  ===================== -->
+  <div class="section">
+
+    <h2>My Applications</h2>
+
+    {% if applications %}
+    <table>
+      <thead>
+        <tr>
+          <th>Job</th>
+          <th>Company</th>
+          <th>Status</th>
+          <th>Applied On</th>
+          <th style="text-align:right;">Timeline</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for app in applications %}
+        <tr>
+
+          <td>
+            <a href="{{ url_for('job_detail', job_id=app.job.id) }}" class="job-link">
+              {{ app.job.title }}
+            </a>
+          </td>
+
+          <td>
+            <a href="/company/{{ app.job.company.id }}" class="job-link">
+              {{ app.job.company.company_name }}
+            </a>
+          </td>
+
+          <td>
+            <span class="badge
+              {% if app.status == 'Applied' %}badge-applied
+              {% elif app.status == 'Shortlisted' %}badge-shortlisted
+              {% elif app.status == 'Rejected' %}badge-rejected
+              {% elif app.status == 'Placed' %}badge-placed
+              {% endif %}">
+              {{ app.status }}
+            </span>
+          </td>
+
+          <!-- Friendlier date: 15 Jan 2026 instead of 2026-01-15 -->
+          <td style="color:var(--text-dim);font-size:13px;">
+            {{ app.applied_at.strftime('%d %b %Y') }}
+          </td>
+
+          <!-- History link — was completely missing before -->
+          <td style="text-align:right;">
+            <a href="{{ url_for('application_history', app_id=app.id) }}" class="history-link">
+              View →
+            </a>
+          </td>
+
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p>No applications yet. Browse open drives above and apply!</p>
+    {% endif %}
+
+  </div>
+
+</div>
+
+<footer>© 2026 Placement Portal — All Rights Reserved</footer>
+
+</body>
 </html>

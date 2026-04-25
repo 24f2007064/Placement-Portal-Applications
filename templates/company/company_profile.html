@@ -1,68 +1,75 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>Company Profile</title>
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/job.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}">
-
+  <title>Company Profile — Placement Portal</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/job.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}">
 </head>
-
 <body>
 
 <div class="job-card">
 
-    <h2>Complete Company Profile</h2>
+  <!-- BACK + TITLE -->
+  <div class="card-header">
+    
+    <h2>Company Profile</h2>
 
-    <form method="POST">
+    <a href="{{ url_for('company_dashboard') }}" class="btn back-btn">← Back</a>
+  </div>
 
-        <div class="input-group">
-            <label>Company Name</label>
-            <input type="text" name="company_name"
-                   value="{{ company.company_name or '' }}" required>
-        </div>
+  <form method="POST">
 
-        <div class="input-group">
-            <label>Industry</label>
-            <input type="text" name="industry"
-                   value="{{ company.industry or '' }}">
-        </div>
+    <div class="input-group">
+      <label>Company Name</label>
+      <input type="text" name="company_name"
+             value="{{ company.company_name or '' }}"
+             placeholder="e.g. Acme Corp" required>
+    </div>
 
-        <div class="input-group">
-            <label>Website</label>
-            <input type="text" name="website"
-                   value="{{ company.website or '' }}">
-        </div>
+    <div class="input-group">
+      <label>Industry</label>
+      <input type="text" name="industry"
+             value="{{ company.industry or '' }}"
+             placeholder="e.g. Software, Finance">
+    </div>
 
-        <div class="input-group">
-            <label>Location</label>
-            <input type="text" name="location"
-                   value="{{ company.location or '' }}">
-        </div>
+    <div class="input-group">
+      <label>Website</label>
+      <input type="text" name="website"
+             value="{{ company.website or '' }}"
+             placeholder="https://yourcompany.com">
+    </div>
 
-        <div class="input-group">
-            <label>HR Email</label>
-            <input type="email" name="hr_email"
-                   value="{{ company.hr_email or '' }}">
-        </div>
+    <div class="input-group">
+      <label>Location</label>
+      <input type="text" name="location"
+             value="{{ company.location or '' }}"
+             placeholder="e.g. Bengaluru, India">
+    </div>
 
-        <div class="input-group">
-            <label>Contact Number</label>
-            <input type="text" name="contact_number"
-                   value="{{ company.contact_number or '' }}">
-        </div>
+    <div class="input-group">
+      <label>HR Email</label>
+      <input type="email" name="hr_email"
+             value="{{ company.hr_email or '' }}"
+             placeholder="hr@yourcompany.com">
+    </div>
 
-        <div class="input-group">
-            <label>Company Description</label>
-            <textarea name="description" rows="5">{{ company.description or '' }}</textarea>
-        </div>
+    <div class="input-group">
+      <label>Contact Number</label>
+      <input type="text" name="contact_number"
+             value="{{ company.contact_number or '' }}"
+             placeholder="+91 98765 43210">
+    </div>
 
-        <button type="submit" class="btn-create">
-            Save Profile
-        </button>
+    <div class="input-group">
+      <label>Company Description</label>
+      <textarea name="description" rows="4"
+                placeholder="Brief description of what your company does…">{{ company.description or '' }}</textarea>
+    </div>
 
-    </form>
+    <button type="submit" class="btn-create">Save Profile →</button>
+
+  </form>
 
 </div>
 
