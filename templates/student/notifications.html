@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Notifications — Placement Portal</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/student.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/notification.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <h1 class="title">Notifications</h1>
+    <a href="{{ url_for('student_dashboard') }}" class="btn back-btn">← Back</a>
+  </div>
+
+  <!-- SECTION -->
+  <div class="section">
+
+    {% if notifs %}
+
+      <div class="notif-list">
+
+        {% for n in notifs %}
+        <div class="notif-item">
+
+          <div class="notif-message">
+            {{ n.message }}
+          </div>
+
+          <div class="notif-time">
+            {{ n.created_at.strftime('%d %b %Y, %H:%M') }}
+          </div>
+
+        </div>
+        {% endfor %}
+
+      </div>
+
+    {% else %}
+      <p>No updates yet. When companies respond, you'll see it here.</p>
+    {% endif %}
+
+  </div>
+
+</div>
+
+<footer>© 2026 Placement Portal — All Rights Reserved</footer>
+
+</body>
+</html>

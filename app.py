@@ -779,12 +779,18 @@ def student_dashboard():
         student_id=student.id
     ).all()
 
+    unread_count = Notification.query.filter_by(
+    user_id=user.id,
+    is_read=False
+    ).count()
+
     return render_template(
         "student/student_dashboard.html",
         student=student,
         jobs=jobs,
         applications=applications,
-        profile_complete=profile_complete
+        profile_complete=profile_complete,
+        unread_count=unread_count
     )
 
 
@@ -943,6 +949,171 @@ def application_history(app_id):
 def logout():
     session.clear()
     return redirect(url_for("login"))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#CLAUDE PART
+
+
+# =========================
+# NOTIFICATION ROUTES
+# Paste these into app.py alongside the other student routes
+# =========================
+
+from flask import jsonify   # add this to your existing imports at the top of app.py
+
+
+# ------------------------------------------------------------------
+# GET  /notifications
+# Renders the full notifications page for the logged-in student.
+# ------------------------------------------------------------------
+@app.route("/notifications")
+def notifications_page():
+
+    if "role" not in session or session["role"] != "student":
+        return redirect(url_for("login"))
+
+    user = User.query.get(session["user_id"])
+
+    # Fetch this student's notifications, newest first
+    notifs = (
+        Notification.query
+        .filter_by(user_id=user.id)
+        .order_by(Notification.created_at.desc())
+        .all()
+    )
+    Notification.query.filter_by(
+    user_id=session["user_id"],
+    is_read=False
+    ).update({"is_read": True})
+
+    db.session.commit()
+
+    
+    # Count unread so the bell dot on the dashboard stays accurate
+    unread_count = sum(1 for n in notifs if not n.is_read)
+    
+
+
+    return render_template(
+        "student/notifications.html",
+        notifs=notifs,
+        unread_count=unread_count,
+        student=user.student_profile
+    )
+
+
+# ------------------------------------------------------------------
+# POST /notifications/mark_read/<id>
+# Marks a single notification as read, returns JSON.
+# Called by the JS fetch() on the notifications page.
+# ------------------------------------------------------------------
+@app.route("/notifications/mark_read/<int:notif_id>", methods=["POST"])
+def mark_notification_read(notif_id):
+
+    if "role" not in session or session["role"] != "student":
+        return jsonify({"error": "Unauthorized"}), 401
+
+    notif = Notification.query.get_or_404(notif_id)
+
+    # Security: only the owner can mark it read
+    if notif.user_id != session["user_id"]:
+        return jsonify({"error": "Forbidden"}), 403
+
+    notif.is_read = True
+    db.session.commit()
+
+    # Return remaining unread count so the bell dot can update
+    unread_count = Notification.query.filter_by(
+        user_id=session["user_id"],
+        is_read=False
+    ).count()
+
+    return jsonify({"ok": True, "unread_count": unread_count})
+
+
+# ------------------------------------------------------------------
+# POST /notifications/mark_all_read
+# Marks every unread notification for this student as read.
+# ------------------------------------------------------------------
+@app.route("/notifications/mark_all_read", methods=["POST"])
+def mark_all_notifications_read():
+
+    if "role" not in session or session["role"] != "student":
+        return jsonify({"error": "Unauthorized"}), 401
+
+    Notification.query.filter_by(
+        user_id=session["user_id"],
+        is_read=False
+    ).update({"is_read": True})
+
+    db.session.commit()
+
+    return jsonify({"ok": True, "unread_count": 0})
+
+
+# ------------------------------------------------------------------
+# GET /notifications/unread_count   (used by JS polling, optional)
+# Returns the live unread count as JSON so the bell dot can refresh.
+# ------------------------------------------------------------------
+@app.route("/notifications/unread_count")
+def notifications_unread_count():
+
+    if "role" not in session or session["role"] != "student":
+        return jsonify({"error": "Unauthorized"}), 401
+
+    count = Notification.query.filter_by(
+        user_id=session["user_id"],
+        is_read=False
+    ).count()
+
+    return jsonify({"unread_count": count})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # =========================

@@ -10,12 +10,9 @@
 
 <div class="container">
 
-  <!-- =====================
-       TOP BAR
-  ===================== -->
+  <!-- TOP BAR -->
   <div class="top-bar">
 
-    <!-- Greeting replaces plain title -->
     <div class="greeting">
       <div class="greeting-sub">Welcome back</div>
       <div class="greeting-name">
@@ -25,12 +22,11 @@
 
     <div class="top-actions">
 
-      <!-- Notification Bell with unread dot -->
-      <a href="#" class="notif-btn" title="Notifications">
+    
+      <a href="{{ url_for('notifications_page') }}" class="notif-btn" id="notif-bell" title="Notifications">
         🔔
-        {% set unread = student.user.notifications | selectattr('is_read', 'equalto', false) | list %}
-        {% if unread %}
-        <span class="notif-dot"></span>
+        {% if unread_count > 0 %}
+            <span class="notif-dot"></span>
         {% endif %}
       </a>
 
@@ -40,10 +36,7 @@
     </div>
   </div>
 
-
-  <!-- =====================
-       PROFILE WARNING — stronger, horizontal layout
-  ===================== -->
+  <!-- PROFILE WARNING -->
   {% if not profile_complete %}
   <div class="section profile-warning">
     <div class="profile-warning-text">
@@ -54,12 +47,8 @@
   </div>
   {% endif %}
 
-
-  <!-- =====================
-       OPEN DRIVES — title once, search inside section
-  ===================== -->
+  <!-- OPEN DRIVES -->
   <div class="section">
-
     <div class="section-header">
       <h2>Open Approved Drives</h2>
       <form action="/search_jobs" class="search-bar">
@@ -82,16 +71,8 @@
       <tbody>
         {% for job in jobs %}
         <tr>
-
-          <td>
-            <a href="{{ url_for('job_detail', job_id=job.id) }}" class="job-link">
-              {{ job.title }}
-            </a>
-          </td>
-
+          <td><a href="{{ url_for('job_detail', job_id=job.id) }}" class="job-link">{{ job.title }}</a></td>
           <td style="color:var(--text-dim);">{{ job.company.company_name }}</td>
-
-          <!-- Skill chips instead of raw comma-separated text -->
           <td>
             <div class="skill-chips">
               {% for skill in job.skills.split(',') %}
@@ -99,9 +80,7 @@
               {% endfor %}
             </div>
           </td>
-
           <td><span class="salary-val">{{ job.salary }}</span></td>
-
           <td style="text-align:right;">
             {% if profile_complete %}
             <a href="/apply_job/{{ job.id }}" class="btn apply-btn">Apply</a>
@@ -109,7 +88,6 @@
             <span style="color:var(--text-dim);font-size:12px;">Complete profile first</span>
             {% endif %}
           </td>
-
         </tr>
         {% endfor %}
       </tbody>
@@ -117,17 +95,11 @@
     {% else %}
     <p>No open drives available right now.</p>
     {% endif %}
-
   </div>
 
-
-  <!-- =====================
-       MY APPLICATIONS — now with History column
-  ===================== -->
+  <!-- MY APPLICATIONS -->
   <div class="section">
-
     <h2>My Applications</h2>
-
     {% if applications %}
     <table>
       <thead>
@@ -142,19 +114,8 @@
       <tbody>
         {% for app in applications %}
         <tr>
-
-          <td>
-            <a href="{{ url_for('job_detail', job_id=app.job.id) }}" class="job-link">
-              {{ app.job.title }}
-            </a>
-          </td>
-
-          <td>
-            <a href="/company/{{ app.job.company.id }}" class="job-link">
-              {{ app.job.company.company_name }}
-            </a>
-          </td>
-
+          <td><a href="{{ url_for('job_detail', job_id=app.job.id) }}" class="job-link">{{ app.job.title }}</a></td>
+          <td><a href="/company/{{ app.job.company.id }}" class="job-link">{{ app.job.company.company_name }}</a></td>
           <td>
             <span class="badge
               {% if app.status == 'Applied' %}badge-applied
@@ -165,19 +126,10 @@
               {{ app.status }}
             </span>
           </td>
-
-          <!-- Friendlier date: 15 Jan 2026 instead of 2026-01-15 -->
-          <td style="color:var(--text-dim);font-size:13px;">
-            {{ app.applied_at.strftime('%d %b %Y') }}
-          </td>
-
-          <!-- History link — was completely missing before -->
+          <td style="color:var(--text-dim);font-size:13px;">{{ app.applied_at.strftime('%d %b %Y') }}</td>
           <td style="text-align:right;">
-            <a href="{{ url_for('application_history', app_id=app.id) }}" class="history-link">
-              View →
-            </a>
+            <a href="{{ url_for('application_history', app_id=app.id) }}" class="history-link">View →</a>
           </td>
-
         </tr>
         {% endfor %}
       </tbody>
@@ -185,12 +137,12 @@
     {% else %}
     <p>No applications yet. Browse open drives above and apply!</p>
     {% endif %}
-
   </div>
 
 </div>
 
 <footer>© 2026 Placement Portal — All Rights Reserved</footer>
+
 
 </body>
 </html>
